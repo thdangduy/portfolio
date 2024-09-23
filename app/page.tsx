@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/navbar";
 import { StickyImg } from "@/components/sticky-img";
@@ -12,13 +12,8 @@ const Scene = dynamic(() => import("@/components/Scene"), {
   ssr: false,
 });
 const Home = () => {
-  const [keep3d, setKeep3d] = useState(true);
   useEffect(() => {
     const lenis = new Lenis();
-    // const timeout = setTimeout(() => {
-    //   setKeep3d(false);
-    //   clearTimeout(timeout);
-    // }, 15000);
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
@@ -30,11 +25,9 @@ const Home = () => {
     <>
       <main className="h-full w-full">
         <Navbar />
-        {/*keep3d && (
-          <div className="h-screen w-full">
-            <Scene />
-          </div>
-        ) */}
+        <div className="h-screen w-full">
+          <Scene />
+        </div>
         <StickyImg
           picturesPath={[
             "/who-am-i.png",
