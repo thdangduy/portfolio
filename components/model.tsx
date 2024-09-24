@@ -11,21 +11,10 @@ export const Model = () => {
   const { viewport } = useThree();
   useFrame(() => {
     if (mesh.current) {
-      mesh.current.rotation.x += 0.02;
+      mesh.current.rotation.x += 0.05;
     }
   });
-  //   const materialProps = useControls(
-  //     {
-  //       thickness: { value: 0.2, min: 0, max: 3, step: 0.05 },
-  //       roughness: { value: 0, min: 0, max: 1, step: 0.1 },
-  //       transmission: { value: 1, min: 0, max: 1, step: 0.1 },
-  //       ior: { value: 1.2, min: 0, max: 3, step: 0.1 },
-  //       chromaticAberration: { value: 0.02, min: 0, max: 1 },
-  //       backside: { value: true },
-  //       visible: { value: false },
-  //     },
-  //     { hidden: true }
-  //   );
+
   const materialProps = {
     thickness: 0.2,
     roughness: 0.2,

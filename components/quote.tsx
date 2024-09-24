@@ -18,7 +18,7 @@ export function Quote() {
     });
     tl.from(lineRef.current, {
       width: 0,
-      opacity: 0,
+      // opacity: 0,
       scrollTrigger: {
         trigger: lineRef.current,
         start: "top bottom",
@@ -39,7 +39,7 @@ export function Quote() {
     });
   });
   return (
-    <div className="w-96 flex flex-col items-center relative">
+    <div className="w-5/6 md:w-96 flex flex-col items-center relative">
       <div ref={magicCardRef} className="w-full">
         <MagicCard
           gradientColor="#ffb3be1f"
