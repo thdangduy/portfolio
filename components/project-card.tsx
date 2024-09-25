@@ -4,19 +4,22 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface ProjectCardProps {
   project: {
     src: string;
     label: string;
     description: string;
+    route: string;
   };
 }
 
 export function ProjectCard({
-  project: { src, label, description },
+  project: { src, label, description, route },
 }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const router = useRouter();
 
   return (
     <div className="w-screen min-h-screen p-4 flex flex-col md:flex-row items-center justify-center gap-8">
@@ -29,9 +32,11 @@ export function ProjectCard({
         <Image
           src={src}
           alt="Project Preview"
-          layout="fill"
-          objectFit="cover"
-          className="transition-transform object-left duration-300 hover:scale-105"
+          fill
+          sizes="(max-width: 768px) 100vw,
+            (max-width: 1200px) 50vw,
+            33vw"
+          className="transition-transform object-cover object-left duration-300 hover:scale-105"
         />
       </motion.div>
       <motion.div
@@ -84,6 +89,9 @@ export function ProjectCard({
             whileTap={{ scale: 0.98 }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            onClick={() => {
+              router.push(route);
+            }}
           >
             Learn More <ArrowUpRight size={14} />
           </motion.button>

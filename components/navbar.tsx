@@ -11,8 +11,10 @@ import Hamburger from "./hamburger";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Contact, Folder, HomeIcon, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   const tl = useRef<gsap.core.Timeline | null>();
   useGSAP(() => {
     gsap.set("#expendedNav", {
@@ -78,7 +80,14 @@ export const Navbar = () => {
           Playfair.className
         )}
       >
-        <h1 className={cn("", MontserratFont.className)}>@avisek</h1>
+        <h1
+          onClick={() => {
+            router.push("/");
+          }}
+          className={cn("select-none cursor-pointer", MontserratFont.className)}
+        >
+          @avisek
+        </h1>
         <Hamburger isOpen={isOpen} setIsOpen={setIsOpen} />
       </nav>
       <div

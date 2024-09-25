@@ -118,8 +118,8 @@ export const About = () => {
                   src={src}
                   alt={label[0]}
                   fill
-                  objectFit="contain"
-                  className="image"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="image object-contain"
                 />
               </div>
               <div

@@ -25,8 +25,7 @@ const Home = () => {
   return (
     <>
       <React.Fragment>
-        <main className="h-full w-full">
-          <Navbar />
+        <main className="w-full">
           <div className="relative h-screen w-full flex items-center justify-center">
             <video
               src="https://res.cloudinary.com/dorxspa9g/video/upload/v1727156327/c4iyudhntmfcv2uztb8y.mp4"
@@ -37,7 +36,10 @@ const Home = () => {
               typeof="video/mp4"
               playsInline
               aria-placeholder="my video"
-              className="h-fit w-3/4"
+              className="h-fit w-3/4 select-none  "
+              controls={false}
+              disablePictureInPicture
+              onContextMenu={(e) => e.preventDefault()}
               onError={() => {
                 console.log("error");
               }}
@@ -65,7 +67,6 @@ const Home = () => {
           />
 
           <Projects />
-          <Footer />
         </main>
       </React.Fragment>
     </>

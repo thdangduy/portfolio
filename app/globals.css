@@ -21,6 +21,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -107,8 +108,8 @@ body,
   }
 }
 
-#colorAnimation {
-  background: -webkit-linear-gradient(16deg, #487ff5, #ff183b, #487ff5);
+.colorAnimation {
+  background: -webkit-linear-gradient(16deg, #04ff8a, #ff0606, #04ff8a);
   background-clip: text;
   color: transparent;
   text-shadow: 0px 3px 30px rgba(46, 42, 42, 0.667);

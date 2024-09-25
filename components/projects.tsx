@@ -7,6 +7,7 @@ import { ProjectCard } from "./project-card";
 const projects = [
   {
     src: "/project-planner-ai.jpg",
+    route: "/project/project-planner-ai",
     label: "Project Planner AI",
     description: `After learning a new tech stack, I often find myself searching for project ideas to practice with. That's when I thought, why not create an AI that generates project ideas for me? And that's how **Project Planner AI** came to life!
 
@@ -14,6 +15,7 @@ Built with Next.js, Tailwind CSS, MongoDB, and Next Auth, this tool is designed 
   },
   {
     src: "/dtimes.jpg",
+    route: "/project/dtimes-news",
     label: "DTimes.",
     description: `Dtimes is a news website I created using Django and PostgreSQL. It features a modern, clean design powered by Tailwind CSS, allowing users to browse news easily. The site lets you search for news by categories and provides a seamless experience with a relational database that connects news articles to their authors. Simple, efficient, and packed with useful features, Dtimes offers an organized and user-friendly way to stay updated with the latest news.`,
   },
