@@ -18,6 +18,8 @@
     "@react-three/drei": "^9.113.0",
     "@react-three/fiber": "^8.17.7",
     "@react-three/postprocessing": "^2.16.2",
+    "@splinetool/react-spline": "^4.0.0",
+    "@splinetool/runtime": "^1.9.28",
     "@studio-freight/react-lenis": "^0.0.47",
     "@types/three": "^0.168.0",
     "class-variance-authority": "^0.7.0",
