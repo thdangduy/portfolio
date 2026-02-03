@@ -2,6 +2,8 @@
 
 A modern, full-stack developer portfolio built with Next.js 16, React 19, and Tailwind CSS v4. This project showcases my skills, projects, and thoughts through a clean, dark-themed interface with smooth animations and robust backend integration.
 
+## Live Link [biisal.codeltix.com](https://biisal.codeltix.com)
+
 ![Portfolio Preview](./demo/hero.png)
 
 ## 🚀 Tech Stack
