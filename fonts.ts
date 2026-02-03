@@ -1,21 +1,39 @@
-import { JetBrains_Mono } from "next/font/google";
-import { Playfair_Display } from "next/font/google";
-import { Montserrat } from "next/font/google";
-export const JetBrains_Light = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: "300",
-});
-export const JetBrains_Bold = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: "700",
+import {
+    Orbitron,
+    Poppins, Open_Sans, Montserrat, JetBrains_Mono,
+    Albert_Sans
+} from "next/font/google";
+
+export const orbitron = Orbitron({
+    variable: "--font-orbitron",
+    subsets: ["latin"],
 });
 
-export const Playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: "400",
+export const openSans = Open_Sans({
+    variable: "--font-open-sans",
+    subsets: ["latin"],
+});
+
+export const poppins = Poppins({
+    variable: "--font-poppins",
+    weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+    subsets: ["latin"]
 });
 
 export const MontserratFont = Montserrat({
-  subsets: ["latin"],
-  weight: "600",
+    subsets: ["latin"],
+    weight: "600",
 });
+
+
+
+export const JetBrainsMono = JetBrains_Mono({
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
+    variable: "--font-jetbrains-mono"
+})
+
+export const AlbertSans = Albert_Sans({
+    subsets: ["latin"],
+    weight: "600"
+})

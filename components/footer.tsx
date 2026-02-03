@@ -1,16 +1,22 @@
-import React from "react";
-import { Quote } from "./quote";
-import { FooterContent } from "./footer-content";
+import Link from "next/link";
+import { Github } from "lucide-react";
 
-export const Footer = () => {
-  return (
-    <div className="w-full h-[200vh] bg-transparent">
-      <div className="w-screen sticky top-0 h-screen flex items-center justify-center bg-transparent">
-        <Quote />
-      </div>
-      <div className="w-full h-screen backdrop-blur-md">
-        <FooterContent />
-      </div>
-    </div>
-  );
-};
+const Footer = () => {
+
+
+	return (
+		<div className="h-screen flex flex-col items-center justify-center w-screen bg-black gap-4">
+			<h1 className="text-xl font-thin text-white">Thank you :) (Laal dil)</h1>
+			<Link
+				href="https://github.com/biisal/portfolio"
+				target="_blank"
+				className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors"
+			>
+				<Github className="w-4 h-4" />
+				<span>Source Code</span>
+			</Link>
+		</div>
+	);
+}
+
+export default Footer;

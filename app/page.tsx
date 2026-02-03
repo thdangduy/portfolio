@@ -1,76 +1,54 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
-import { Navbar } from "@/components/navbar";
-import { StickyImg } from "@/components/sticky-img";
-import Lenis from "@studio-freight/lenis";
-import { About } from "@/components/about";
-import { Projects } from "@/components/projects";
-import { Footer } from "@/components/footer";
-const Scene = dynamic(() => import("@/components/Scene"), {
-  ssr: false,
-});
+import Intro from '@/components/intro';
+import './globals.css';
+import ProjectsIntro from '@/components/projects-intro';
+import About from '@/components/about';
+import Footer from '@/components/footer';
+import Skills from '@/components/skills';
+import connectToDB from '@/lib/mongo.db';
+import ContactSection from '@/components/contact-section';
+import SmoothScroll from '@/components/smooth-scroll';
+import BlogPreview from '@/components/blog-preview';
+import { getProjects } from '@/lib/actions/projects';
+import { prisma } from '@/lib/prisma';
+import { Project } from '@/.generated/client';
 
-const Home = () => {
-  useEffect(() => {
-    const lenis = new Lenis();
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+export const revalidate = 600;
 
-    requestAnimationFrame(raf);
-  }, []);
+export default async function Home() {
 
-  return (
-    <>
-      <React.Fragment>
-        <main className="w-full">
-          <div className="relative h-screen w-full flex items-center justify-center">
-            <video
-              src="https://res.cloudinary.com/dorxspa9g/video/upload/v1727156327/c4iyudhntmfcv2uztb8y.mp4"
-              autoPlay
-              loop
-              muted
-              preload="auto"
-              typeof="video/mp4"
-              playsInline
-              aria-placeholder="my video"
-              className="h-fit w-3/4 select-none  "
-              controls={false}
-              disablePictureInPicture
-              onContextMenu={(e) => e.preventDefault()}
-              onError={() => {
-                console.log("error");
-              }}
-            ></video>
-          </div>
-          <StickyImg
-            picturesPath={[
-              "/who-am-i.png",
-              "Education?",
-              "Interests?",
-              "Information?",
-              "What Do I Do?",
-            ]}
-            showText={true}
-          />
-          <About />
-          <StickyImg
-            picturesPath={[
-              "/what-i-have-developed.png",
-              "/django.png",
-              "/fastapi.png",
-              "/nextjs.png",
-              "/react.png",
-            ]}
-          />
+	await getProjects()
+	let wakatimeData = { languages: [] };
+	try {
+		const res = await fetch(
+			'https://wakatime.com/api/v1/users/0f55e9f5-6228-466e-903b-95815eb3a43e/stats/last_7_days?timeout=15',
+			{ next: { revalidate: 3600 } },
+		);
+		if (res.ok) {
+			const json = await res.json();
+			wakatimeData = json.data;
+		}
+	} catch (error) {
+		console.error('Error fetching Wakatime stats:', error);
+	}
 
-          <Projects />
-        </main>
-      </React.Fragment>
-    </>
-  );
-};
 
-export default Home;
+	let projects: Project[] = [];
+	try {
+		projects = await prisma.project.findMany();
+	} catch (err) {
+		console.log('Error fetching projects : ', err);
+	}
+	return (
+		<>
+			<div className="container mx-auto px-6 pb-28 lg:px-20">
+				<Intro />
+				<About />
+				<ProjectsIntro />
+				<Skills languages={wakatimeData.languages} />
+				<BlogPreview />
+				<ContactSection />
+			</div>
+			<Footer />
+		</>
+	);
+}

@@ -1,126 +1,39 @@
-"use client";
-import React, { useEffect, useRef, useState } from "react";
-import {
-  JetBrains_Bold,
-  JetBrains_Light,
-  MontserratFont,
-  Playfair,
-} from "@/fonts";
-import { cn } from "@/lib/utils";
-import Hamburger from "./hamburger";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { Contact, Folder, HomeIcon, User } from "lucide-react";
-import { useRouter } from "next/navigation";
-export const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
-  const tl = useRef<gsap.core.Timeline | null>();
-  useGSAP(() => {
-    gsap.set("#expendedNav", {
-      clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
-      opacity: 0,
-    });
-    gsap.set("ul li p", { yPercent: 100, opacity: 0 });
-    gsap.set("ul li div", { yPercent: 100, opacity: 0 });
-    gsap.set("#navTitle", { yPercent: 100, opacity: 0 });
-    tl.current = gsap
-      .timeline({ paused: true })
-      .to("#expendedNav", {
-        opacity: 1,
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-        duration: 1,
-        ease: "power4.inOut",
-      })
-      .to("#navTitle", {
-        yPercent: 0,
-        duration: 0.7,
-        opacity: 1,
-      })
-      .to("ul li p , ul li div", {
-        yPercent: 0,
-        stagger: 0.1,
-        opacity: 1,
-        delay: -0.75,
-        duration: 0.7,
-      });
-  });
-
-  useEffect(() => {
-    if (isOpen) {
-      tl.current?.play();
-    } else {
-      tl.current?.reverse();
-    }
-  }, [isOpen]);
-
-  const routes = [
-    {
-      label: "Home",
-      icon: HomeIcon,
-    },
-    {
-      label: "About",
-      icon: User,
-    },
-    {
-      label: "Projects",
-      icon: Folder,
-    },
-    {
-      label: "Contact",
-      icon: Contact,
-    },
-  ];
-  return (
-    <>
-      <nav
-        className={cn(
-          "w-full px-4 h-16 flex items-center justify-between fixed top-0 right-0 z-40 backdrop-blur-xl",
-          Playfair.className
-        )}
-      >
-        <h1
-          onClick={() => {
-            router.push("/");
-          }}
-          className={cn("select-none cursor-pointer", MontserratFont.className)}
-        >
-          @avisek
-        </h1>
-        <Hamburger isOpen={isOpen} setIsOpen={setIsOpen} />
-      </nav>
-      <div
-        className={`pt-16 fixed w-64 h-full  z-20  transition-all duration-300`}
-        style={{
-          right: 10,
-          opacity: 0,
-        }}
-        id="expendedNav"
-      >
-        <div className="h-fit p-3 w-full right-10 bg-white/5 backdrop-blur-lg rounded-md overflow-hidden">
-          <h1 id="navTitle" className={cn("text-xs", JetBrains_Bold.className)}>
-            Navigation
-          </h1>
-          <br className="bg-white w-full h-3" />
-          <ul className={cn("space-y-3 z-20", JetBrains_Light.className)}>
-            {routes.map((route) => (
-              <li
-                key={route.label}
-                className="flex w-full items-center space-x-2 h-8 overflow-hidden "
-              >
-                <div className="bg-red-700 rounded-md p-2 w-fit">
-                  <route.icon className="w-4 h-4" />
-                </div>
-                <p className="px-2 bg-white/5 rounded-md w-full h-full flex items-center text-center leading-loose">
-                  {route.label}
-                </p>
-              </li>
-            ))}
-          </ul>
-          {/* <div className="h-40 w-40 bg-red-700/35 absolute z-10 -right-20 -bottom-20 rounded-full box-border shadow-[0_0_40px_rgba(255,0,0,0.6)]"></div> */}
-        </div>
-      </div>
-    </>
-  );
+'use client';
+import { Download } from 'lucide-react';
+import Link from 'next/link';
+const Navbar = () => {
+	return (
+		<div className="fixed top-6 right-6 z-50 md:top-10 md:right-20">
+			<div className="flex items-center gap-4">
+				<Link
+					target="_blank"
+					href="https://github.com/biisal/portfolio"
+					className="hidden md:flex items-center gap-2 rounded-full bg-white/10 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-white/20 hover:scale-105 backdrop-blur-md border border-white/5"
+				>
+					<span>Source Code</span>
+					<div className="h-4 w-4">
+						<svg
+							role="img"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<title>GitHub</title>
+							<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+						</svg>
+					</div>
+				</Link>
+				<Link
+					target="_blank"
+					href="https://drive.google.com/file/d/1wcR-9LoLmYQQ3lh-m35V7NxV1AdURNda/view?usp=drive_link"
+					className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-white/20 hover:scale-105 backdrop-blur-md border border-white/5"
+				>
+					<span>Download CV</span>
+					<Download className="h-4 w-4" />
+				</Link>
+			</div>
+		</div>
+	);
 };
+
+export default Navbar;

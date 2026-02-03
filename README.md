@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Avisek Ray (biisal) - Portfolio
 
-## Getting Started
+A modern, full-stack developer portfolio built with Next.js 16, React 19, and Tailwind CSS v4. This project showcases my skills, projects, and thoughts through a clean, dark-themed interface with smooth animations and robust backend integration.
 
-First, run the development server:
+![Portfolio Preview](https://res.cloudinary.com/dorxspa9g/image/upload/v1760437739/green-stick_holso5.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Directory)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Database**: [MongoDB](https://www.mongodb.com/) with [Prisma ORM](https://www.prisma.io/)
+- **Authentication**: [Better Auth](https://www.better-auth.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **UI Components**: [Radix UI](https://www.radix-ui.com/) / Shadcn-like Implementation
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Content Management**: Custom Blog & Project System
+- **Integrations**: 
+  - Telegram Bot (Contact Form)
+  - Cloudinary (Image Hosting)
+  - Wakatime (Coding Stats)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Dynamic Content**: CMS-like features for managing Projects and Blog posts.
+- **Admin Dashboard**: Secure admin area for content management.
+- **Interactive UI**: Smooth transitions, scroll animations, and a polished dark mode aesthetic.
+- **Contact Form**: Direct integration with Telegram for instant message delivery.
+- **Real-time Stats**: Live coding statistics via Wakatime API.
+- **SEO Optimized**: Built-in metadata and Open Graph support.
 
-## Learn More
+## 🛠️ Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+### Prerequisites
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Node.js (v18+ recommended)
+- MongoDB Database
+- Cloudinary Account
+- Telegram Bot Token (optional, for contact form)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Installation
 
-## Deploy on Vercel
+1.  **Clone the repository:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```bash
+    git clone https://github.com/biisal/portfolio-v2.git
+    cd portfolio-v2
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    # or
+    pnpm install
+    # or
+    bun install
+    ```
+
+3.  **Environment Setup:**
+
+    Rename `.env.example` to `.env` and fill in your secrets:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+    Required variables:
+    - `DATABASE_URL`: MongoDB connection string
+    - `BETTER_AUTH_SECRET`: Secret for authentication
+    - `ADMIN_SECRET`: Secret header for admin actions
+    - `TELEGRAM_BOT_TOKEN` & `TELEGRAM_CHAT_ID`: For contact form
+    - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`: For images
+
+4.  **Database Setup:**
+
+    Generate Prisma client and push schema:
+
+    ```bash
+    npx prisma generate
+    npx prisma db push
+    ```
+
+5.  **Run Development Server:**
+
+    ```bash
+    npm run dev
+    ```
+
+    Open [http://localhost:3000](http://localhost:3000) to view the site.
+
+## 🛣️ Routes
+
+### Pages
+- `/`: Home Page (Intro, About, Skills, etc.)
+- `/projects`: All Projects List
+- `/project/[slug]`: Single Project Details
+- `/blog`: Blog Posts
+- `/contact`: Contact Page
+- `/login`: Admin Login
+
+### Admin Routes (Protected)
+- `/blog/editor`: Create/Edit Blog Posts
+- `/projects/form`: Create/Edit Projects
+
+### API Endpoints
+- `GET /api/projects`: Fetch all projects
+- `POST /api/projects`: Create a new project (Admin)
+- `GET /api/blog/[slug]`: Get a specific blog post
+- `POST /api/contact`: Send a contact message
+
+## 📂 Project Structure
+
+- `/app`: Next.js App Router pages and API routes.
+- `/components`: Reusable UI components.
+- `/lib`: Utility functions, Prisma client, and configurations.
+- `/prisma`: Database schema.
+- `/public`: Static assets.
+
+## 👤 Author
+
+**Avisek Ray (biisal)**
+
+- Website: [biisal.codeltix.com](https://biisal.codeltix.com)
+- GitHub: [@biisal](https://github.com/biisal)
+- LinkedIn: [Avisek Ray](https://www.linkedin.com/in/biisal)
+- X (Twitter): [@biisal18](https://x.com/biisal18)
+
+## 📄 License
+
+This project is licensed under the MIT License.
