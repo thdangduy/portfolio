@@ -43,8 +43,8 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/biisal/portfolio-v2.git
-    cd portfolio-v2
+    git clone https://github.com/biisal/portfolio.git
+    cd portfolio
     ```
 
 2.  **Install dependencies:**
