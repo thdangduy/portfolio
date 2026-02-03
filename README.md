@@ -2,7 +2,7 @@
 
 A modern, full-stack developer portfolio built with Next.js 16, React 19, and Tailwind CSS v4. This project showcases my skills, projects, and thoughts through a clean, dark-themed interface with smooth animations and robust backend integration.
 
-![Portfolio Preview](https://res.cloudinary.com/dorxspa9g/image/upload/v1760437739/green-stick_holso5.png)
+![Portfolio Preview](./demo/hero.png)
 
 ## 🚀 Tech Stack
 
@@ -29,7 +29,22 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 - **Real-time Stats**: Live coding statistics via Wakatime API.
 - **SEO Optimized**: Built-in metadata and Open Graph support.
 
-## 🛠️ Getting Started
+## � Screenshots
+
+
+### Projects
+![Projects](./demo/projects.png)
+
+|            Skills            |           Blog            |
+| :--------------------------: | :-----------------------: |
+| ![Skills](./demo/skills.png) | ![Blog](./demo/blogs.png) |
+
+### Contact
+![Contact](./demo/contact.png)
+
+
+
+## �🛠️ Getting Started
 
 ### Prerequisites
 
