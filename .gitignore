@@ -42,5 +42,4 @@ next-env.d.ts
 .env
 
 .generated
-pnpm-lock.yaml
 bun.lock
