@@ -1,12 +1,19 @@
 import Link from "next/link";
 
+import { Project } from "@/.generated/client";
 import { prisma } from "@/lib/prisma";
 
 import ProjectSmallCard from "./project-small-card";
 import { BlurFade } from "./ui/blur-fade";
 
 const ProjectsIntro = async () => {
-  const projects = await prisma.project.findMany();
+  let projects: Project[] = [];
+  try {
+    projects = await prisma.project.findMany();
+  } catch (error) {
+    console.error("Failed to fetch projects:", error);
+  }
+
   if (projects.length === 0) return "lol";
 
   return (

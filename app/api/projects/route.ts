@@ -87,11 +87,3 @@ export async function POST(request: Request) {
 
   return new Response(JSON.stringify(body), { status: 201 });
 }
-
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: "30mb",
-    },
-  },
-};

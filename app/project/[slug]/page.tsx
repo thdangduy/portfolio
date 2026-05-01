@@ -12,7 +12,7 @@ export const revalidate = 600;
 const getProject = cache(
   async (slug: string): Promise<ProjectInterface | null> => {
     try {
-      return prisma.project.findFirst({ where: { slug } });
+      return await prisma.project.findFirst({ where: { slug } });
     } catch (err) {
       console.log("Error fetching project:", err);
       return null;

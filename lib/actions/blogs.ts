@@ -8,25 +8,35 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export const getblogPost = cache(async () => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  const includeDrafts = session?.user;
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    const includeDrafts = session?.user;
 
-  return await prisma.blogPost.findMany({
-    where: includeDrafts ? {} : { published: true },
-    orderBy: { created_at: "desc" },
-  });
+    return await prisma.blogPost.findMany({
+      where: includeDrafts ? {} : { published: true },
+      orderBy: { created_at: "desc" },
+    });
+  } catch (error) {
+    console.error("Error fetching blog posts:", error);
+    return [];
+  }
 });
 
 export const getBlogPost = cache(async (slug: string) => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  const includeDrafts = session?.user;
-  return await prisma.blogPost.findFirst({
-    where: includeDrafts ? { slug } : { slug, published: true },
-  });
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    const includeDrafts = session?.user;
+    return await prisma.blogPost.findFirst({
+      where: includeDrafts ? { slug } : { slug, published: true },
+    });
+  } catch (error) {
+    console.error("Error fetching blog post:", error);
+    return null;
+  }
 });
 
 export async function incrementView(slug: string) {
