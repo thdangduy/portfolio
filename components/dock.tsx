@@ -1,164 +1,165 @@
-'use client';
-import { usePathname, useRouter } from 'next/navigation';
-import { useState, useEffect, useRef, startTransition } from 'react';
-import { motion } from 'framer-motion';
+"use client";
+import { usePathname, useRouter } from "next/navigation";
+import { useState, useEffect, useRef, startTransition } from "react";
+import { motion } from "framer-motion";
 import {
-    HomeIcon,
-    Info as InfoIcon,
-    Folder as ProjectsIcon,
-    Mail as ContactIcon,
-    StarIcon,
-} from 'lucide-react';
+  HomeIcon,
+  Info as InfoIcon,
+  Folder as ProjectsIcon,
+  Mail as ContactIcon,
+  StarIcon,
+} from "lucide-react";
 
 const Dock = () => {
-    const router = useRouter();
-    const pathname = usePathname();
-    const [activeSection, setActiveSection] = useState<string>('/');
-    const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const router = useRouter();
+  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState<string>("/");
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-    const routes = [
-        {
-            id: '/',
-            name: 'Home',
-            icon: HomeIcon,
-        },
-        {
-            id: 'about',
-            name: 'About',
-            icon: InfoIcon,
-        },
-        {
-            id: 'projects',
-            name: 'Projects',
-            icon: ProjectsIcon,
-        },
-        {
-            id: 'skills',
-            name: 'Skills',
-            icon: StarIcon,
-        },
-        {
-            id: 'contact',
-            name: 'Contact',
-            icon: ContactIcon,
-        },
-    ];
+  const routes = [
+    {
+      id: "/",
+      name: "Home",
+      icon: HomeIcon,
+    },
+    {
+      id: "about",
+      name: "About",
+      icon: InfoIcon,
+    },
+    {
+      id: "projects",
+      name: "Projects",
+      icon: ProjectsIcon,
+    },
+    {
+      id: "skills",
+      name: "Skills",
+      icon: StarIcon,
+    },
+    {
+      id: "contact",
+      name: "Contact",
+      icon: ContactIcon,
+    },
+  ];
 
-    useEffect(() => {
-        startTransition(() => {
-            if (pathname === '/') {
-                setActiveSection('/');
-            } else if (pathname.startsWith('/project')) {
-                setActiveSection('projects');
+  useEffect(() => {
+    startTransition(() => {
+      if (pathname === "/") {
+        setActiveSection("/");
+      } else if (pathname.startsWith("/project")) {
+        setActiveSection("projects");
+      } else {
+        setActiveSection(pathname);
+      }
+    });
+  }, [pathname]);
+
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const sectionIds = ["intro", "about", "projects", "skills", "contact"];
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-30% 0px -50% 0px",
+      threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          startTransition(() => {
+            if (id === "intro") {
+              setActiveSection("/");
             } else {
-                setActiveSection(pathname);
+              setActiveSection(id);
             }
-        });
-    }, [pathname]);
-
-    useEffect(() => {
-        if (pathname !== '/') return;
-
-        const sectionIds = ['intro', 'about', 'projects', 'skills', 'contact'];
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '-30% 0px -50% 0px',
-            threshold: 0,
-        };
-
-        const observerCallback = (entries: IntersectionObserverEntry[]) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
-                    startTransition(() => {
-                        if (id === 'intro') {
-                            setActiveSection('/');
-                        } else {
-                            setActiveSection(id);
-                        }
-                    });
-                }
-            });
-        };
-
-        const observer = new IntersectionObserver(
-            observerCallback,
-            observerOptions,
-        );
-
-        sectionIds.forEach((id) => {
-            const element = document.getElementById(id);
-            if (element) {
-                observer.observe(element);
-            }
-        });
-
-        return () => observer.disconnect();
-    }, [pathname]);
-
-    const handleClick = (id: string) => {
-        if (id.charAt(0) === '/') {
-            if (id === pathname) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            router.push(id);
-            return;
+          });
         }
-        if (pathname !== '/') {
-            router.push('/#' + id);
-            return;
-        }
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
+      });
     };
 
-    const isActive = (routeId: string) => {
-        if (pathname === '/') {
-            if (routeId === '/') {
-                return activeSection === '/';
-            }
-            return activeSection === routeId;
-        } else {
-            if (routeId === '/') return false;
-            return pathname.includes(routeId.replace('/', ''));
-        }
-    };
-
-    return (
-        <div className="">
-            <div className="fixed bottom-4 z-50 left-1/2 transform -translate-x-1/2 flex items-center bg-[#1a1a1a]/80 backdrop-blur-md rounded-full px-2 py-2 border border-white/10 shadow-lg">
-                {routes.map((route, index) => (
-                    <div key={route.id} className="relative px-1">
-                        {isActive(route.id) && (
-                            <motion.div
-                                layoutId={pathname === '/' ? 'navbar-pill' : undefined}
-                                className="absolute inset-0 bg-white rounded-full"
-                                initial={{ opacity: 1 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                            />
-                        )}
-                        <button
-                            ref={(el) => {
-                                buttonRefs.current[index] = el;
-                            }}
-                            onClick={() => handleClick(route.id)}
-                            className={`relative z-10 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 ${isActive(route.id)
-                                ? 'text-black'
-                                : 'text-gray-400 hover:text-white'
-                                }`}
-                        >
-                            <route.icon className="h-4 w-4" />
-                            <span className="hidden md:inline">{route.name}</span>
-                        </button>
-                    </div>
-                ))}
-            </div>
-        </div>
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions,
     );
+
+    sectionIds.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  const handleClick = (id: string) => {
+    if (id.charAt(0) === "/") {
+      if (id === pathname) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      router.push(id);
+      return;
+    }
+    if (pathname !== "/") {
+      router.push("/#" + id);
+      return;
+    }
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const isActive = (routeId: string) => {
+    if (pathname === "/") {
+      if (routeId === "/") {
+        return activeSection === "/";
+      }
+      return activeSection === routeId;
+    } else {
+      if (routeId === "/") return false;
+      return pathname.includes(routeId.replace("/", ""));
+    }
+  };
+
+  return (
+    <div className="">
+      <div className="fixed bottom-4 z-50 left-1/2 transform -translate-x-1/2 flex items-center bg-[#1a1a1a]/80 backdrop-blur-md rounded-full px-2 py-2 border border-white/10 shadow-lg">
+        {routes.map((route, index) => (
+          <div key={route.id} className="relative px-1">
+            {isActive(route.id) && (
+              <motion.div
+                layoutId={pathname === "/" ? "navbar-pill" : undefined}
+                className="absolute inset-0 bg-white rounded-full"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 1 }}
+                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+              />
+            )}
+            <button
+              ref={(el) => {
+                buttonRefs.current[index] = el;
+              }}
+              onClick={() => handleClick(route.id)}
+              className={`relative z-10 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 ${
+                isActive(route.id)
+                  ? "text-black"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
+              <route.icon className="h-4 w-4" />
+              <span className="hidden md:inline">{route.name}</span>
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Dock;

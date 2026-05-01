@@ -1,9 +1,7 @@
-import ProjectForm from "@/components/project/form"
+import ProjectForm from "@/components/project/form";
 
 const page = () => {
-	return (
-		<ProjectForm />
-	)
-}
+  return <ProjectForm />;
+};
 
-export default page
+export default page;

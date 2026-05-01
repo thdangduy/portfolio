@@ -1,9 +1,7 @@
-import { JetBrainsMono } from "@/fonts"
+import { JetBrainsMono } from "@/fonts";
 
 const BlogLayout = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <div className={JetBrainsMono.className}>{children}</div>
-    )
-}
+  return <div className={JetBrainsMono.className}>{children}</div>;
+};
 
-export default BlogLayout
+export default BlogLayout;

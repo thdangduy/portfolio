@@ -1,7 +1,7 @@
 {
-    "functions": {
-        "app/**/*.js": {
-            "includeFiles": "generated/prisma/**"
-        }
+  "functions": {
+    "app/**/*.js": {
+      "includeFiles": "generated/prisma/**"
     }
+  }
 }

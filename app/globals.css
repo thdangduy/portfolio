@@ -1,162 +1,157 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,538;1,538&family=Playwrite+HU:wght@100..400&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Stack+Sans+Notch:wght@332&display=swap');
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,538;1,538&family=Playwrite+HU:wght@100..400&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Stack+Sans+Notch:wght@332&display=swap");
+@import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-	/* Border Radius */
-	--radius: 0.5rem;
-	--radius-sm: calc(var(--radius) - 4px);
-	--radius-md: calc(var(--radius) - 2px);
-	--radius-lg: var(--radius);
-	--radius-xl: calc(var(--radius) + 4px);
+  /* Border Radius */
+  --radius: 0.5rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 
-	/* Color Mappings */
-	--color-background: var(--background);
-	--color-foreground: var(--foreground);
+  /* Color Mappings */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
 
-	--color-card: var(--card);
-	--color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
 
-	--color-popover: var(--popover);
-	--color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
 
-	--color-primary: var(--primary);
-	--color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
 
-	--color-secondary: var(--secondary);
-	--color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
 
-	--color-muted: var(--muted);
-	--color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
 
-	--color-accent: var(--accent);
-	--color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
 
-	--color-destructive: var(--destructive);
-	--color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
 
-	--color-border: var(--border);
-	--color-input: var(--input);
-	--color-ring: var(--ring);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
-	--color-chart-1: var(--chart-1);
-	--color-chart-2: var(--chart-2);
-	--color-chart-3: var(--chart-3);
-	--color-chart-4: var(--chart-4);
-	--color-chart-5: var(--chart-5);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 
-	--color-midnightpurple: var(--midnightpurple);
+  --color-midnightpurple: var(--midnightpurple);
 
-	/* Fonts */
-	--font-speedbeast: 'SpeedBeast', sans-serif;
+  /* Fonts */
+  --font-speedbeast: "SpeedBeast", sans-serif;
 
-	/* Custom Animations */
-	--animate-marquee: marquee var(--duration) infinite linear;
-	--animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-	--animate-spin-slow: spin 5s linear infinite;
+  /* Custom Animations */
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --animate-spin-slow: spin 5s linear infinite;
 
-	/* Blog Theme Colors */
-	--color-blog-bg: var(--blog-bg);
-	--color-blog-fg: var(--blog-fg);
-	--color-blog-black: var(--blog-black);
-	--color-blog-red: var(--blog-red);
-	--color-blog-green: var(--blog-green);
-	--color-blog-green-light: var(--blog-green-light);
-	--color-blog-yellow: var(--blog-yellow);
-	--color-blog-orange: var(--blog-orange);
-	--color-blog-blue: var(--blog-blue);
-	--color-blog-magenta: var(--blog-magenta);
-	--color-blog-cyan: var(--blog-cyan);
-	--color-blog-white: var(--blog-white);
-	--color-blog-selection-bg: var(--blog-selection-bg);
-	--color-blog-active-border: var(--blog-active-border);
-	--color-blog-inactive-border: var(--blog-inactive-border);
+  /* Blog Theme Colors */
+  --color-blog-bg: var(--blog-bg);
+  --color-blog-fg: var(--blog-fg);
+  --color-blog-black: var(--blog-black);
+  --color-blog-red: var(--blog-red);
+  --color-blog-green: var(--blog-green);
+  --color-blog-green-light: var(--blog-green-light);
+  --color-blog-yellow: var(--blog-yellow);
+  --color-blog-orange: var(--blog-orange);
+  --color-blog-blue: var(--blog-blue);
+  --color-blog-magenta: var(--blog-magenta);
+  --color-blog-cyan: var(--blog-cyan);
+  --color-blog-white: var(--blog-white);
+  --color-blog-selection-bg: var(--blog-selection-bg);
+  --color-blog-active-border: var(--blog-active-border);
+  --color-blog-inactive-border: var(--blog-inactive-border);
 }
 
 /* Font Faces */
 @font-face {
-	font-family: 'SpeedBeast';
-	src: url('/Game Of Squids.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
+  font-family: "SpeedBeast";
+  src: url("/Game Of Squids.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
-
-
 
 /* Default Theme (Dark) */
 :root {
-	--background: hsl(0 0% 0%);
-	--foreground: hsl(0 0% 100%);
+  --background: hsl(0 0% 0%);
+  --foreground: hsl(0 0% 100%);
 
-	--card: hsl(0 0% 9.4%);
-	--card-foreground: hsl(0 0% 100%);
+  --card: hsl(0 0% 9.4%);
+  --card-foreground: hsl(0 0% 100%);
 
-	--popover: hsl(0 0% 9.4%);
-	--popover-foreground: hsl(0 0% 100%);
+  --popover: hsl(0 0% 9.4%);
+  --popover-foreground: hsl(0 0% 100%);
 
-	--primary: hsl(81 97.3% 62.6%);
-	--primary-foreground: hsl(0 0% 0%);
+  --primary: hsl(81 97.3% 62.6%);
+  --primary-foreground: hsl(0 0% 0%);
 
-	--secondary: hsl(0 0% 14.9%);
-	--secondary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(0 0% 14.9%);
+  --secondary-foreground: hsl(0 0% 100%);
 
-	--muted: hsl(0 0% 14.9%);
-	--muted-foreground: hsl(0 0% 63.9%);
+  --muted: hsl(0 0% 14.9%);
+  --muted-foreground: hsl(0 0% 63.9%);
 
-	--accent: hsl(81 97.3% 62.6%);
-	--accent-foreground: hsl(0 0% 100%);
+  --accent: hsl(81 97.3% 62.6%);
+  --accent-foreground: hsl(0 0% 100%);
 
-	--destructive: hsl(0 84.2% 60.2%);
-	--destructive-foreground: hsl(0 0% 100%);
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(0 0% 100%);
 
-	--border: hsl(0 0% 20%);
-	--input: hsl(216 100% 50%);
-	--ring: hsl(81 97.3% 62.6%);
+  --border: hsl(0 0% 20%);
+  --input: hsl(216 100% 50%);
+  --ring: hsl(81 97.3% 62.6%);
 
-	--chart-1: hsl(12 76% 61%);
-	--chart-2: hsl(173 58% 39%);
-	--chart-3: hsl(197 37% 24%);
-	--chart-4: hsl(43 74% 66%);
-	--chart-5: hsl(27 87% 67%);
+  --chart-1: hsl(12 76% 61%);
+  --chart-2: hsl(173 58% 39%);
+  --chart-3: hsl(197 37% 24%);
+  --chart-4: hsl(43 74% 66%);
+  --chart-5: hsl(27 87% 67%);
 
-	--midnightpurple: hsl(271 36% 12%);
+  --midnightpurple: hsl(271 36% 12%);
 
-	--blog-bg: #090B17;
-	--blog-fg: #a9b1d6;
-	--blog-black: #2a2b32;
-	--blog-red: #f7768e;
-	--blog-green: #9ECE6A;
-	--blog-green-light: #1ABC9C;
-	--blog-yellow: #FF9E64;
-	--blog-orange: #FF9E64;
-	--blog-blue: #7aa2f7;
-	--blog-magenta: #bb9af7;
-	--blog-cyan: #7dcfff;
-	--blog-white: #c0caf5;
-	--blog-selection-bg: #28344a;
-	--blog-active-border: #FF9E64;
-	--blog-inactive-border: #090B17;
+  --blog-bg: #090b17;
+  --blog-fg: #a9b1d6;
+  --blog-black: #2a2b32;
+  --blog-red: #f7768e;
+  --blog-green: #9ece6a;
+  --blog-green-light: #1abc9c;
+  --blog-yellow: #ff9e64;
+  --blog-orange: #ff9e64;
+  --blog-blue: #7aa2f7;
+  --blog-magenta: #bb9af7;
+  --blog-cyan: #7dcfff;
+  --blog-white: #c0caf5;
+  --blog-selection-bg: #28344a;
+  --blog-active-border: #ff9e64;
+  --blog-inactive-border: #090b17;
 }
-
 
 /* Base Styles */
 @layer base {
-	* {
-		@apply border-border;
-	}
+  * {
+    @apply border-border;
+  }
 
-	html {
-		scroll-behavior: smooth;
-	}
+  html {
+    scroll-behavior: smooth;
+  }
 
-	body {
-		font-family: Arial, Helvetica, sans-serif;
-	}
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
 
-	body::-webkit-scrollbar {
-		display: none;
-	}
-
-
+  body::-webkit-scrollbar {
+    display: none;
+  }
 }

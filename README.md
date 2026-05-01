@@ -17,7 +17,7 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 - **UI Components**: [Radix UI](https://www.radix-ui.com/) / Shadcn-like Implementation
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Content Management**: Custom Blog & Project System
-- **Integrations**: 
+- **Integrations**:
   - Telegram Bot (Contact Form)
   - Cloudinary (Image Hosting)
   - Wakatime (Coding Stats)
@@ -33,8 +33,8 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 
 ## � Screenshots
 
-
 ### Projects
+
 ![Projects](./demo/projects.png)
 
 |            Skills            |           Blog            |
@@ -42,9 +42,8 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 | ![Skills](./demo/skills.png) | ![Blog](./demo/blogs.png) |
 
 ### Contact
+
 ![Contact](./demo/contact.png)
-
-
 
 ## �🛠️ Getting Started
 
@@ -109,6 +108,7 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 ## 🛣️ Routes
 
 ### Pages
+
 - `/`: Home Page (Intro, About, Skills, etc.)
 - `/projects`: All Projects List
 - `/project/[slug]`: Single Project Details
@@ -117,10 +117,12 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 - `/login`: Admin Login
 
 ### Admin Routes (Protected)
+
 - `/blog/editor`: Create/Edit Blog Posts
 - `/projects/form`: Create/Edit Projects
 
 ### API Endpoints
+
 - `GET /api/projects`: Fetch all projects
 - `POST /api/projects`: Create a new project (Admin)
 - `GET /api/blog/[slug]`: Get a specific blog post
