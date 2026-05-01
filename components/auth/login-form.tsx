@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { JetBrainsMono } from "@/fonts";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
+
+import { JetBrainsMono } from "@/fonts";
+import { authClient } from "@/lib/auth-client";
+import { cn } from "@/lib/utils";
 
 export default function LoginForm() {
   const router = useRouter();

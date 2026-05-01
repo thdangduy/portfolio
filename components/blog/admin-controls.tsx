@@ -1,11 +1,12 @@
 "use client";
 
-import { deleteBlogPost } from "@/lib/actions/blogs";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { Edit,Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Trash2, Edit } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { deleteBlogPost } from "@/lib/actions/blogs";
 
 interface AdminControlsProps {
   slug: string;

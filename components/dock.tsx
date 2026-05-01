@@ -1,14 +1,14 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
-import { useState, useEffect, useRef, startTransition } from "react";
 import { motion } from "framer-motion";
 import {
+  Folder as ProjectsIcon,
   HomeIcon,
   Info as InfoIcon,
-  Folder as ProjectsIcon,
   Mail as ContactIcon,
   StarIcon,
 } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { startTransition,useEffect, useRef, useState } from "react";
 
 const Dock = () => {
   const router = useRouter();

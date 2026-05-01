@@ -1,5 +1,6 @@
-import ProjectsIntro from "@/components/projects-intro";
 import { Metadata } from "next";
+
+import ProjectsIntro from "@/components/projects-intro";
 
 export const metadata: Metadata = {
   title: "Projects | Avisek Ray (biisal)",

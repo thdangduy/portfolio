@@ -1,10 +1,11 @@
+import { Metadata } from "next";
+import { cache, Suspense } from "react";
+
 import NotFound from "@/components/not-found";
 import ProjectShow from "@/components/project-show";
 import { TextLoader } from "@/components/text-loader";
-import { ProjectInterface } from "@/lib/schema/project.schema";
-import { cache, Suspense } from "react";
-import { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
+import { ProjectInterface } from "@/lib/schema/project.schema";
 
 export const revalidate = 600;
 

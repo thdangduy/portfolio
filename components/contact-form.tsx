@@ -1,16 +1,18 @@
 "use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import { Loader2,Send } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "./ui/button";
+import { toast } from "sonner";
+
 import api from "@/api";
 import {
   formSchema as FormSchema,
   FormValues,
 } from "@/lib/schema/contact-form.schema";
-import { toast } from "sonner";
-import { motion } from "framer-motion";
-import { Send, Loader2 } from "lucide-react";
+
+import { Button } from "./ui/button";
 
 export default function ContactForm() {
   const [capchanums, setCapchanums] = React.useState<{
@@ -23,10 +25,13 @@ export default function ContactForm() {
 
   // Generate captcha numbers only on client to avoid hydration mismatch
   React.useEffect(() => {
-    setCapchanums({
-      num1: Math.floor(Math.random() * 10),
-      num2: Math.floor(Math.random() * 10),
-    });
+    const timer = setTimeout(() => {
+      setCapchanums({
+        num1: Math.floor(Math.random() * 10),
+        num2: Math.floor(Math.random() * 10),
+      });
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const [captcha, setCaptcha] = React.useState("");
@@ -41,13 +46,13 @@ export default function ContactForm() {
     resolver: zodResolver(FormSchema),
   });
 
-  const regenerateCaptcha = () => {
+  const regenerateCaptcha = React.useCallback(() => {
     setCapchanums({
       num1: Math.floor(Math.random() * 10),
       num2: Math.floor(Math.random() * 10),
     });
     setCaptcha("");
-  };
+  }, []);
 
   const onSubmit = async (data: FormValues) => {
     if (capchanums.num1 === null || capchanums.num2 === null) {

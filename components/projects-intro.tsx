@@ -1,8 +1,9 @@
-import ProjectSmallCard from "./project-small-card";
-import { ProjectInterface } from "@/lib/schema/project.schema";
 import Link from "next/link";
-import { BlurFade } from "./ui/blur-fade";
+
 import { prisma } from "@/lib/prisma";
+
+import ProjectSmallCard from "./project-small-card";
+import { BlurFade } from "./ui/blur-fade";
 
 const ProjectsIntro = async () => {
   const projects = await prisma.project.findMany();

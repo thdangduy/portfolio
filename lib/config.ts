@@ -4,4 +4,4 @@ const github = "https://github.com/biisal";
 const linkedin = "https://www.linkedin.com/in/biisal";
 const xTwetter = "https://x.com/biisal18";
 
-export { phoneNumber, email, github, linkedin, xTwetter };
+export { email, github, linkedin, phoneNumber, xTwetter };

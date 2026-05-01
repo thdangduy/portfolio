@@ -1,10 +1,10 @@
 import {
+  Albert_Sans,
+  JetBrains_Mono,
+  Montserrat,
+  Open_Sans,
   Orbitron,
   Poppins,
-  Open_Sans,
-  Montserrat,
-  JetBrains_Mono,
-  Albert_Sans,
 } from "next/font/google";
 
 export const orbitron = Orbitron({

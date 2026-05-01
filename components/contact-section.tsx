@@ -1,16 +1,18 @@
 "use client";
 
-import ContactForm from "./contact-form";
 import {
+  ArrowUpRight,
   GithubIcon,
   MailIcon,
   MessageCircle,
-  ArrowUpRight,
 } from "lucide-react";
-import { BlurFade } from "./ui/blur-fade";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+
 import { AlbertSans } from "@/fonts";
+import { cn } from "@/lib/utils";
+
+import ContactForm from "./contact-form";
+import { BlurFade } from "./ui/blur-fade";
 
 const ContactSection = () => {
   const social = [

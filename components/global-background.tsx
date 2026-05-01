@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import React from "react";
+
 import { BlurFade } from "./ui/blur-fade";
 
 const GlobalBackground = () => {

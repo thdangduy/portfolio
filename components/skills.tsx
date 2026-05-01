@@ -1,10 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { BlurFade } from "@/components/ui/blur-fade";
-import { cn } from "@/lib/utils";
 
+import { BlurFade } from "@/components/ui/blur-fade";
 import { AlbertSans } from "@/fonts";
+import { cn } from "@/lib/utils";
 
 interface Language {
   name: string;

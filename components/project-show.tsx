@@ -1,17 +1,19 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { ProjectInterface } from "@/lib/schema/project.schema";
-import Link from "next/link";
 import {
   ArrowLeft,
-  ExternalLink,
-  Globe,
   ArrowRight,
   Calendar,
+  ExternalLink,
+  Globe,
 } from "lucide-react";
+import Link from "next/link";
 import { useEffect } from "react";
-import { BlurFade } from "./ui/blur-fade";
+
+import { Button } from "@/components/ui/button";
+import { ProjectInterface } from "@/lib/schema/project.schema";
+
 import ProjectSmallCard from "./project-small-card";
+import { BlurFade } from "./ui/blur-fade";
 
 const ProjectShow = ({ project }: { project: ProjectInterface }) => {
   useEffect(() => {

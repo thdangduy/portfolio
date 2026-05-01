@@ -1,12 +1,14 @@
 "use client";
 
+import Image from "@tiptap/extension-image";
+import { EditorContent,useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { default as NextImage } from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { ZodIssue } from "zod";
+
 import api from "@/api";
 import { ProjectFormSchema } from "@/lib/schema/project.types";
-import Image from "@tiptap/extension-image";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { ZodIssue } from "zod";
-import { useEffect, useRef, useState } from "react";
 
 const ProjectForm = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -280,9 +282,12 @@ const ProjectForm = () => {
             <h2 className="text-lg font-semibold mb-3">Live Preview</h2>
             <div className="border rounded-lg p-4  min-h-[400px]">
               {selectedImage && (
-                <img
+                <NextImage
                   src={selectedImage}
                   alt="Project thumbnail"
+                  width={500}
+                  height={300}
+                  unoptimized
                   className="w-full h-auto object-cover rounded-lg mb-4"
                 />
               )}
@@ -377,9 +382,12 @@ const ImageUpload = ({
           hidden
         />
         {selectedImage ? (
-          <img
+          <NextImage
             src={selectedImage}
             alt="Thumbnail preview"
+            width={128}
+            height={128}
+            unoptimized
             className="h-full w-full object-cover rounded-lg"
           />
         ) : (

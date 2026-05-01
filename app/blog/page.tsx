@@ -1,13 +1,14 @@
-import { JetBrainsMono } from "@/fonts";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { getblogPost } from "@/lib/actions/blogs";
-import { BlogPost } from "@/.generated/client";
-import { ViewCounter } from "@/components/blog/view-counter";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import { AdminControls } from "@/components/blog/admin-controls";
 import { Metadata } from "next";
+import { headers } from "next/headers";
+import Link from "next/link";
+
+import { BlogPost } from "@/.generated/client";
+import { AdminControls } from "@/components/blog/admin-controls";
+import { ViewCounter } from "@/components/blog/view-counter";
+import { JetBrainsMono } from "@/fonts";
+import { getblogPost } from "@/lib/actions/blogs";
+import { auth, Session } from "@/lib/auth";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Blog | Avisek Ray (biisal)",
@@ -60,7 +61,7 @@ export default async function BlogIndex() {
   );
 }
 
-function BlogCards({ posts, session }: { posts: BlogPost[]; session: any }) {
+function BlogCards({ posts, session }: { posts: BlogPost[]; session: Session | null }) {
   return (
     <>
       {posts.map((post) => (

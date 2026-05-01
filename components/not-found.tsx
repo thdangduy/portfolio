@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface NotFoundProps {
   text?: string;
 }
@@ -10,10 +12,12 @@ const NotFound = ({ text }: NotFoundProps) => {
         </h1>
       </div>
       <div className="h-10 w-full left-0 bg-gradient-to-b from-transparent to-black absolute bottom-20 z-20" />
-      <img
+      <Image
         src="/hero5.png"
-        className="h-96 bottom-20 absolute left-1/2 -translate-x-1/2 z-10"
-        alt=""
+        className="h-96 w-auto bottom-20 absolute left-1/2 -translate-x-1/2 z-10"
+        alt="Page Not Found Hero"
+        width={500}
+        height={384}
       />
     </div>
   );

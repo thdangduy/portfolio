@@ -1,12 +1,13 @@
 "use client";
 
 import ReactMarkdown from "react-markdown";
-import { JetBrainsMono } from "@/fonts";
-import { cn } from "@/lib/utils";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
+import remarkGfm from "remark-gfm";
+
+import { JetBrainsMono } from "@/fonts";
+import { cn } from "@/lib/utils";
 
 interface BlogPreviewProps {
   content: string;
@@ -118,7 +119,7 @@ export function BlogPreview({ content, className }: BlogPreviewProps) {
               </td>
             );
           },
-          code({ node, className, children, ...props }) {
+          code({ className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
             const isInline = !match;
 

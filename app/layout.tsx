@@ -1,14 +1,16 @@
-import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import Navbar from "@/components/navbar";
+
+import { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
+
 import Dock from "@/components/dock";
 import GlobalBackground from "@/components/global-background";
+import Navbar from "@/components/navbar";
+import SmoothScroll from "@/components/smooth-scroll";
+import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { Toaster } from "@/components/ui/sonner";
-import { Metadata } from "next";
 import { AlbertSans } from "@/fonts";
 import { cn } from "@/lib/utils";
-import { SmoothCursor } from "@/components/ui/smooth-cursor";
-import SmoothScroll from "@/components/smooth-scroll";
 
 const heroImgUrl =
   "https://res.cloudinary.com/dorxspa9g/image/upload/v1760437739/green-stick_holso5.png";

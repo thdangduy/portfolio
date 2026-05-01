@@ -1,20 +1,21 @@
 "use client";
 
+import { autocompletion, CompletionContext } from "@codemirror/autocomplete";
+import { markdown, markdownKeymap } from "@codemirror/lang-markdown";
+import { oneDark } from "@codemirror/theme-one-dark";
+import { EditorView,keymap } from "@codemirror/view";
+import CodeMirror from "@uiw/react-codemirror";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { JetBrainsMono } from "@/fonts";
-import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+
+import { BlogPost } from "@/.generated/client";
 import { BlogPreview } from "@/components/blog/blog-preview";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import CodeMirror, { ReactCodeMirrorRef } from "@uiw/react-codemirror";
-import { markdown, markdownKeymap } from "@codemirror/lang-markdown";
-import { autocompletion, CompletionContext } from "@codemirror/autocomplete";
-import { oneDark } from "@codemirror/theme-one-dark";
-import { keymap, EditorView } from "@codemirror/view";
-import { BlogPost } from "@/.generated/client";
+import { JetBrainsMono } from "@/fonts";
+import { cn } from "@/lib/utils";
 
 interface BlogEditorProps {
   initialPost?: BlogPost | null;
@@ -92,7 +93,7 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
 
   // Custom markdown completions
   const markdownCompletions = (context: CompletionContext) => {
-    let word = context.matchBefore(/^\w*/); // Simple match, can be improved
+    const word = context.matchBefore(/^\w*/); // Simple match, can be improved
     if (!context.explicit && (!word || word.from === word.to)) return null;
 
     return {
@@ -160,11 +161,14 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
         coverImage?: string;
       };
 
-      setTitle(draft.title ?? initialPost?.title ?? "");
-      setExcerpt(draft.excerpt ?? initialPost?.excerpt ?? "");
-      setContent(draft.content ?? initialPost?.content ?? "");
-      setAuthorName(draft.authorName ?? initialPost?.authorName ?? "Avisek");
-      setCoverImage(draft.coverImage ?? initialPost?.coverImage ?? "");
+      const timer = setTimeout(() => {
+        setTitle(draft.title ?? initialPost?.title ?? "");
+        setExcerpt(draft.excerpt ?? initialPost?.excerpt ?? "");
+        setContent(draft.content ?? initialPost?.content ?? "");
+        setAuthorName(draft.authorName ?? initialPost?.authorName ?? "Avisek");
+        setCoverImage(draft.coverImage ?? initialPost?.coverImage ?? "");
+      }, 0);
+      return () => clearTimeout(timer);
     } catch (error) {
       console.error("Failed to restore blog draft:", error);
       localStorage.removeItem(draftStorageKey);

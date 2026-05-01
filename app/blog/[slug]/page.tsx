@@ -1,12 +1,13 @@
-import Link from "next/link";
 import "@/app/globals.css";
-import { JetBrainsMono } from "@/fonts";
-import { cn } from "@/lib/utils";
-import { BlogPreview } from "@/components/blog/blog-preview";
 
 import { Metadata } from "next";
-import { getBlogPost } from "@/lib/actions/blogs";
+import Link from "next/link";
+
+import { BlogPreview } from "@/components/blog/blog-preview";
 import { ViewCounter } from "@/components/blog/view-counter";
+import { JetBrainsMono } from "@/fonts";
+import { getBlogPost } from "@/lib/actions/blogs";
+import { cn } from "@/lib/utils";
 
 export async function generateMetadata({
   params,

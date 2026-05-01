@@ -1,6 +1,6 @@
+import { JetBrainsMono } from "@/fonts";
 import { incrementView } from "@/lib/actions/blogs";
 import { cn } from "@/lib/utils";
-import { JetBrainsMono } from "@/fonts";
 
 interface ViewCounterProps {
   slug: string;

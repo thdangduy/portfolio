@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 import { ProjectInterface } from "./project.types";
 
 export * from "./project.types";

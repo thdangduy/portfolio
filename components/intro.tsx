@@ -1,19 +1,17 @@
 "use client";
-import { JetBrainsMono } from "@/fonts";
-import { cn } from "@/lib/utils";
 import {
   Mail,
   MapPin,
   Phone,
-  Github,
-  Linkedin,
-  TwitterIcon,
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
 import { BlurFade } from "@/components/ui/blur-fade";
 import { HyperText } from "@/components/ui/hyper-text";
-import { email, linkedin, phoneNumber, xTwetter, github } from "@/lib/config";
-import Link from "next/link";
-import Image from "next/image";
+import { JetBrainsMono } from "@/fonts";
+import { email, github,linkedin, phoneNumber, xTwetter } from "@/lib/config";
+import { cn } from "@/lib/utils";
 const Intro = () => {
   return (
     <section

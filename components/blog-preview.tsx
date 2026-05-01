@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { getblogPost } from "@/lib/actions/blogs";
+
 import { JetBrainsMono } from "@/fonts";
+import { getblogPost } from "@/lib/actions/blogs";
 import { cn } from "@/lib/utils";
+
 import { BlurFade } from "./ui/blur-fade";
 
 export default async function BlogPreview() {
