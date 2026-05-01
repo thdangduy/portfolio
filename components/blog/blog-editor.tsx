@@ -3,7 +3,7 @@
 import { autocompletion, CompletionContext } from "@codemirror/autocomplete";
 import { markdown, markdownKeymap } from "@codemirror/lang-markdown";
 import { oneDark } from "@codemirror/theme-one-dark";
-import { EditorView,keymap } from "@codemirror/view";
+import { EditorView, keymap } from "@codemirror/view";
 import CodeMirror from "@uiw/react-codemirror";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";

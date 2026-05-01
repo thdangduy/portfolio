@@ -27,7 +27,6 @@ export default async function Home() {
     console.error("Error fetching Wakatime stats:", error);
   }
 
-
   return (
     <>
       <div className="container mx-auto px-6 pb-28 lg:px-20">

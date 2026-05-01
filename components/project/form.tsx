@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "@tiptap/extension-image";
-import { EditorContent,useEditor } from "@tiptap/react";
+import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { default as NextImage } from "next/image";
 import { useEffect, useRef, useState } from "react";

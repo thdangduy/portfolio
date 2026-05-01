@@ -1,16 +1,12 @@
 "use client";
-import {
-  Mail,
-  MapPin,
-  Phone,
-} from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { BlurFade } from "@/components/ui/blur-fade";
 import { HyperText } from "@/components/ui/hyper-text";
 import { JetBrainsMono } from "@/fonts";
-import { email, github,linkedin, phoneNumber, xTwetter } from "@/lib/config";
+import { email, github, linkedin, phoneNumber, xTwetter } from "@/lib/config";
 import { cn } from "@/lib/utils";
 const Intro = () => {
   return (

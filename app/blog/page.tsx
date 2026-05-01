@@ -61,7 +61,13 @@ export default async function BlogIndex() {
   );
 }
 
-function BlogCards({ posts, session }: { posts: BlogPost[]; session: Session | null }) {
+function BlogCards({
+  posts,
+  session,
+}: {
+  posts: BlogPost[];
+  session: Session | null;
+}) {
   return (
     <>
       {posts.map((post) => (

@@ -8,7 +8,7 @@ import {
   StarIcon,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { startTransition,useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 
 const Dock = () => {
   const router = useRouter();
