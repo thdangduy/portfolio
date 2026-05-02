@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { JetBrainsMono } from "@/fonts";
-import { cn } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 
 interface BlogEditorProps {
   initialPost?: BlogPost | null;
@@ -31,17 +31,11 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
     initialPost?.authorName || "Avisek",
   );
   const [coverImage, setCoverImage] = useState(initialPost?.coverImage || "");
+  const [slug, setSlug] = useState(initialPost?.slug || "");
   const [isSaving, setIsSaving] = useState(false);
   const hasLoadedDraft = useRef(false);
   const draftSaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const previewContainerRef = useRef<HTMLDivElement>(null);
-
-  const generateSlug = (text: string) => {
-    return text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-  };
 
   const handleSave = async (publish: boolean) => {
     if (!title || !excerpt || !content) {
@@ -52,7 +46,7 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
     setIsSaving(true);
 
     try {
-      const slug = generateSlug(title);
+      const finalSlug = slug || slugify(title);
       const method = initialPost ? "PUT" : "POST";
 
       const response = await fetch("/api/blog", {
@@ -64,7 +58,7 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
           title,
           excerpt,
           content,
-          slug,
+          slug: finalSlug,
           author: { name: authorName },
           coverImage: coverImage || undefined,
           published: publish,
@@ -159,16 +153,16 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
         content?: string;
         authorName?: string;
         coverImage?: string;
+        slug?: string;
       };
 
-      const timer = setTimeout(() => {
-        setTitle(draft.title ?? initialPost?.title ?? "");
-        setExcerpt(draft.excerpt ?? initialPost?.excerpt ?? "");
-        setContent(draft.content ?? initialPost?.content ?? "");
-        setAuthorName(draft.authorName ?? initialPost?.authorName ?? "Avisek");
-        setCoverImage(draft.coverImage ?? initialPost?.coverImage ?? "");
-      }, 0);
-      return () => clearTimeout(timer);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setTitle(draft.title ?? initialPost?.title ?? "");
+      setExcerpt(draft.excerpt ?? initialPost?.excerpt ?? "");
+      setContent(draft.content ?? initialPost?.content ?? "");
+      setAuthorName(draft.authorName ?? initialPost?.authorName ?? "Avisek");
+      setCoverImage(draft.coverImage ?? initialPost?.coverImage ?? "");
+      setSlug(draft.slug ?? initialPost?.slug ?? "");
     } catch (error) {
       console.error("Failed to restore blog draft:", error);
       localStorage.removeItem(draftStorageKey);
@@ -191,6 +185,7 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
           content,
           authorName,
           coverImage,
+          slug,
         }),
       );
     }, 500);
@@ -200,7 +195,7 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
         clearTimeout(draftSaveTimeout.current);
       }
     };
-  }, [authorName, content, coverImage, draftStorageKey, excerpt, title]);
+  }, [authorName, content, coverImage, draftStorageKey, excerpt, title, slug]);
 
   useEffect(() => {
     if (previewContainerRef.current) {
@@ -290,6 +285,25 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
                     placeholder="https://..."
                     className="mt-2 bg-blog-black border-blog-cyan text-blog-fg"
                   />
+                </div>
+
+                <div>
+                  <Label htmlFor="slug" className="text-blog-fg">
+                    Slug (optional)
+                  </Label>
+                  <Input
+                    id="slug"
+                    value={slug}
+                    onChange={(e) => setSlug(e.target.value)}
+                    placeholder="custom-slug"
+                    className="mt-2 bg-blog-black border-blog-cyan text-blog-fg"
+                  />
+                  {!slug && title && (
+                    <p className="text-blog-fg opacity-50 text-xs mt-1">
+                      Generated:{" "}
+                      <span className="font-mono">{slugify(title)}</span>
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
