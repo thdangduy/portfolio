@@ -69,7 +69,7 @@ The `WaveformLine` component isn't just a static animation; it's a data-driven v
 ### Prerequisites
 
 - Node.js (v18+ recommended)
-- MongoDB Database or MongoDB Atlas
+- MongoDB Database or MongoDB Atlas at here ([text](https://www.mongodb.com/))
 - Cloudflare R2 Storage Account
 - Telegram Bot Token (optional, for contact form)
 
