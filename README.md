@@ -94,7 +94,7 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
    - `NEXT_PUBLIC_CLOUDFLARE_R2_BASE_URL`: Public R2 base URL for uploaded images
    - `LASTFM_API_KEY`: Last.fm API key
    - `LASTFM_USER`: Last.fm username
-   - `WAKATIME_API_KEY`: Wakatime API key - change url at /home/ubuntu/portfolio/app/page.tsx
+   - `WAKATIME_API_KEY`: Wakatime API key - change url at /portfolio/app/page.tsx
 
 4. **Database Setup:**
 
