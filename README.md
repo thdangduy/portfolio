@@ -19,7 +19,7 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 - **Content Management**: Custom Blog & Project System
 - **Integrations**:
   - Telegram Bot (Contact Form)
-  - Cloudinary (Image Hosting)
+- Cloudflare R2 (Image Hosting)
   - Wakatime (Coding Stats)
 
 ## ✨ Features
@@ -86,7 +86,11 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
     - `BETTER_AUTH_SECRET`: Secret for authentication
     - `ADMIN_SECRET`: Secret header for admin actions
     - `TELEGRAM_BOT_TOKEN` & `TELEGRAM_CHAT_ID`: For contact form
-    - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`: For images
+    - `CLOUDFLARE_R2_ENDPOINT`: Cloudflare R2 endpoint
+    - `CLOUDFLARE_R2_BUCKET`: R2 bucket name
+    - `CLOUDFLARE_R2_ACCESS_KEY_ID`: R2 access key ID
+    - `CLOUDFLARE_R2_SECRET_ACCESS_KEY`: R2 secret key
+    - `NEXT_PUBLIC_CLOUDFLARE_R2_BASE_URL`: Public R2 base URL for uploaded images
 
 4.  **Database Setup:**
 

@@ -1,10 +1,13 @@
 import { Github } from "lucide-react";
 import Link from "next/link";
 
+import { NowPlaying } from "@/components/now-playing";
+
 const Footer = () => {
   return (
     <div className="h-screen flex flex-col items-center justify-center w-screen bg-black gap-4">
-      <h1 className="text-xl font-thin text-white">Thank you :) (Laal dil)</h1>
+      <h1 className="text-xl font-thin text-white">Thank you :)</h1>
+      <NowPlaying />
       <Link
         href="https://github.com/biisal/portfolio"
         target="_blank"

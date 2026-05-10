@@ -16,7 +16,7 @@ export default async function Home() {
   let wakatimeData = { languages: [] };
   try {
     const res = await fetch(
-      "https://wakatime.com/api/v1/users/0f55e9f5-6228-466e-903b-95815eb3a43e/stats/last_7_days?timeout=15",
+      "https://wakatime.com/api/v1/users/68eb264d-d06b-44ea-ab1c-552fbed580de/stats/last_7_days?timeout=15",
       { next: { revalidate: 3600 } },
     );
     if (res.ok) {

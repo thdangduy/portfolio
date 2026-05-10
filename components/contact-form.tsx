@@ -99,7 +99,7 @@ export default function ContactForm() {
           type="text"
           {...register("name")}
           className={inputClasses}
-          placeholder="John Kumar"
+          placeholder="Place a beautiful name here"
         />
         {errors.name && (
           <span className="text-red-400 text-xs">{errors.name.message}</span>
@@ -113,7 +113,7 @@ export default function ContactForm() {
             type="email"
             {...register("email")}
             className={inputClasses}
-            placeholder="john@codeltix.com"
+            placeholder="your-email@example.com"
           />
           {errors.email && (
             <span className="text-red-400 text-xs">{errors.email.message}</span>
@@ -127,7 +127,7 @@ export default function ContactForm() {
             type="text"
             {...register("whatsapp")}
             className={inputClasses}
-            placeholder="+91 1234567890"
+            placeholder="+84 1234567890"
           />
           {errors.whatsapp && (
             <span className="text-red-400 text-xs">
@@ -141,7 +141,7 @@ export default function ContactForm() {
         <label className="text-sm text-white/60 font-medium">Message</label>
         <textarea
           {...register("message")}
-          className={`${inputClasses} resize-none min-h-[120px]`}
+          className={`${inputClasses} resize-none min-h-[30]`}
           placeholder="Tell me about your project..."
           rows={4}
         />

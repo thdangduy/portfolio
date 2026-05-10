@@ -1,24 +1,24 @@
 import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Contact | Avisek Ray (biisal)",
+  title: "Contact | Thái Duy Portfolio",
   description:
-    "Get in touch with Avisek Ray (biisal), a full-stack developer specializing in Python, Go, React, and modern web technologies. Let’s discuss projects, collaborations, or opportunities.",
+    "Get in touch with Thái Duy, a full-stack developer specializing in Python, Go, React, and modern web technologies. Let’s discuss projects, collaborations, or opportunities.",
   openGraph: {
-    title: "Contact | Avisek Ray (biisal)",
+    title: "Contact | Thái Duy Portfolio",
     description:
-      "Reach out to Avisek Ray (biisal), a full-stack developer experienced in backend and frontend development with modern frameworks and tools.",
-    url: "https://biisal.codeltix.com/contact",
-    siteName: "Avisek Ray Portfolio",
-    locale: "en_IN",
+      "Reach out to Thái Duy, a full-stack developer experienced in backend and frontend development with modern frameworks and tools.",
+    url: "https://thaiduy.store/contact",
+    siteName: "Thái Duy Portfolio",
+    locale: "en_VI",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact | Avisek Ray (biisal)",
+    title: "Contact | Thái Duy Portfolio",
     description:
-      "Contact Avisek Ray (biisal), full-stack developer skilled in Python, Go, React, and cloud technologies.",
-    creator: "@avisekray",
+      "Contact Thái Duy, full-stack developer skilled in Python, Go, React, and cloud technologies.",
+    creator: "@thaiduy",
   },
 };
 

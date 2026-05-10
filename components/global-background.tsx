@@ -1,10 +1,15 @@
 "use client";
 import { motion, useScroll, useTransform } from "framer-motion";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React from "react";
 
 import { BlurFade } from "./ui/blur-fade";
+
+// Dynamically import client-only components to prevent hydration errors
+const DynamicGrootParticles = dynamic(() => import("./groot-particles"), { ssr: false });
+const DynamicFireflies = dynamic(() => import("./fireflies"), { ssr: false });
 
 const GlobalBackground = () => {
   const { scrollY } = useScroll();
@@ -16,37 +21,21 @@ const GlobalBackground = () => {
   const darkerOpacity = useTransform(darker, (v) => v);
 
   if (path.startsWith("/project") || path.startsWith("/blog")) {
-    return (
-      <div className="fixed inset-0 z-[-1] w-full h-full bg-blog-bg overflow-hidden"></div>
-    );
+    return <div className="fixed inset-0 z-[-1] w-full h-full bg-blog-bg overflow-hidden" />;
   }
 
   return (
     <div className="fixed inset-0 z-[-1] w-full h-full bg-[#0a0a0a] overflow-hidden pointer-events-none">
-      <motion.div
-        style={{ filter: blurFilter }}
-        className="absolute inset-0 w-full h-full z-1"
-      >
-        <div className="absolute top-1/4 -left-30 w-[600px] h-[600px] bg-orange-500/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute -top-30 -left-30 w-[900px] h-[600px] bg-[#341D26]/40 rounded-full blur-[120px] pointer-events-none" />
-
+      <motion.div style={{ filter: blurFilter }} className="absolute inset-0 w-full h-full z-1">
         <BlurFade className="w-full h-full" inView>
           <div className="h-full w-full relative">
-            <Image
-              width={1000}
-              height={1000}
-              src="/dog-hero-exp1.png"
-              alt="Background"
-              className="absolute right-0 bottom-0 scale-105 h-full w-full object-cover"
-            />
+            <Image fill src="/izzac-s1-jsSbkXIs8RM-unsplash.jpg" alt="Background" className="object-cover" priority />
+            <DynamicGrootParticles />
           </div>
         </BlurFade>
       </motion.div>
-
-      <motion.div
-        style={{ opacity: darkerOpacity }}
-        className="absolute inset-0 w-full h-full bg-black z-[2]"
-      />
+      <motion.div style={{ opacity: darkerOpacity }} className="absolute inset-0 w-full h-full bg-black z-2" />
+      <DynamicFireflies />
     </div>
   );
 };

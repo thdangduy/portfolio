@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-import { AlbertSans } from "@/fonts";
+import { GoogleSans } from "@/fonts";
 import { cn } from "@/lib/utils";
 
 import ContactForm from "./contact-form";
@@ -18,20 +18,20 @@ const ContactSection = () => {
   const social = [
     {
       icon: MailIcon,
-      link: "mailto:biisal.int@gmail.com",
-      label: "biisal.int@gmail.com",
+      link: "mailto:me@thaiduy.digital",
+      label: "me@thaiduy.digital",
       name: "Email",
     },
     {
       icon: MessageCircle,
-      link: "https://wa.me/917029881540",
-      label: "+91 7029881540",
+      link: "https://wa.me/84909507475",
+      label: "+84 909507475",
       name: "WhatsApp",
     },
     {
       icon: GithubIcon,
-      link: "https://github.com/biisal",
-      label: "github.com/biisal",
+      link: "https://github.com/thdangduy",
+      label: "github.com/thdangduy",
       name: "GitHub",
     },
   ];
@@ -41,7 +41,7 @@ const ContactSection = () => {
       id="contact"
       className={cn(
         "relative min-h-screen w-full py-24 flex items-center",
-        AlbertSans.className,
+        GoogleSans.variable,
       )}
     >
       <div className="w-full">
@@ -106,7 +106,7 @@ const ContactSection = () => {
           </BlurFade>
 
           <BlurFade delay={0.3} inView className="lg:col-span-3">
-            <div className="p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/10">
+            <div className="p-6 md:p-8 rounded-2xl bg-white/2 border border-white/10">
               <ContactForm />
             </div>
           </BlurFade>

@@ -31,7 +31,7 @@ model Project {
   description  String
   excerpt      String
   link         String
-  slug         String
+  slug         String   @unique
   tags         String[]
   technologies String[]
   thumbnail    String

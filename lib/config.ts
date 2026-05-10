@@ -1,7 +1,8 @@
-const phoneNumber = "+91 7029881540";
-const email = "biisal.int@gmail.com";
-const github = "https://github.com/biisal";
-const linkedin = "https://www.linkedin.com/in/biisal";
-const xTwetter = "https://x.com/biisal18";
+const phoneNumber = "+84 909507475";
+const email = "me@thaiduy.digital";
+const github = "https://github.com/thdangduy";
+const linkedin = "https://www.linkedin.com/in/thdangduy";
+const x = "https://x.com/thaiduy27";
+const facebook = "https://www.facebook.com/th.dangduy";
 
-export { email, github, linkedin, phoneNumber, xTwetter };
+export { email, facebook, github, linkedin, phoneNumber, x };

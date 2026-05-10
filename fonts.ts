@@ -1,40 +1,26 @@
-import {
-  Albert_Sans,
-  JetBrains_Mono,
-  Montserrat,
-  Open_Sans,
-  Orbitron,
-  Poppins,
-} from "next/font/google";
+import local from "next/font/local";
 
-export const orbitron = Orbitron({
-  variable: "--font-orbitron",
-  subsets: ["latin"],
+export const GoogleSans = local({
+  src: [
+    {
+      path: "./public/fonts/GoogleSans-VariableFont_GRAD,opsz,wght.ttf",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "./public/fonts/GoogleSans-Italic-VariableFont_GRAD,opsz,wght.ttf",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
+  variable: "--font-google-sans",
 });
 
-export const openSans = Open_Sans({
-  variable: "--font-open-sans",
-  subsets: ["latin"],
+export const GoogleSansCode = local({
+  src: "./public/fonts/GoogleSansCode-VariableFont_MONO,wght.ttf",
+  weight: "100 900",
+  variable: "--font-google-sans-code",
 });
 
-export const poppins = Poppins({
-  variable: "--font-poppins",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-});
-
-export const MontserratFont = Montserrat({
-  subsets: ["latin"],
-  weight: "600",
-});
-
-export const JetBrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-jetbrains-mono",
-});
-
-export const AlbertSans = Albert_Sans({
-  subsets: ["latin"],
-  weight: "600",
-});
+// Alias for backward compatibility
+export const JetBrainsMono = GoogleSansCode;

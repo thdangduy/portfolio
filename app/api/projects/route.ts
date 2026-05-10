@@ -1,15 +1,24 @@
-import connectToDB from "@/lib/mongo.db";
+import { headers } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+
+import { auth } from "@/lib/auth";
+import {
+  replaceBase64ImagesInHtml,
+  uploadBase64ImageToR2,
+} from "@/lib/cloudflare-r2";
+import { prisma } from "@/lib/prisma";
 import { ProjectInterface } from "@/lib/schema/project.schema";
 
 export async function GET() {
   try {
-    const db = connectToDB();
-
-    const dummy = await (await db).collection("projects").find({}).toArray();
-
-    return new Response(JSON.stringify(dummy), { status: 200 });
+    const projects = await prisma.project.findMany();
+    return NextResponse.json(projects);
   } catch (err) {
-    console.log(err);
+    console.error("Error fetching projects:", err);
+    return NextResponse.json(
+      { error: "Failed to fetch projects" },
+      { status: 500 },
+    );
   }
 }
 
@@ -30,60 +39,145 @@ function slugify(str: string) {
   return str;
 }
 
-async function uploadBase64Image(base64Image: string): Promise<string> {
-  const url = `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`;
-  const formData = new FormData();
-  formData.append("file", base64Image);
-  formData.append("upload_preset", process.env.CLOUDINARY_UPLOAD_PRESET || "");
+export async function POST(request: NextRequest) {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-  const response = await fetch(url, {
-    method: "POST",
-    body: formData,
-  });
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error("Failed to upload image, reason : ", errorText);
-    throw new Error("Failed to upload image");
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body: ProjectInterface = await request.json();
+
+    body.description = await replaceBase64ImagesInHtml(body.description);
+    body.thumbnail = await uploadBase64ImageToR2(body.thumbnail);
+    body.slug = slugify(body.title);
+
+    const now = new Date();
+    body.updated_at = now;
+    body.created_at = now;
+
+    const project = await prisma.project.create({
+      data: {
+        title: body.title,
+        excerpt: body.excerpt,
+        description: body.description,
+        tags: body.tags,
+        technologies: body.technologies,
+        thumbnail: body.thumbnail,
+        slug: body.slug,
+        link: body.link || "",
+        created_at: body.created_at,
+        updated_at: body.updated_at,
+      },
+    });
+
+    return NextResponse.json(project, { status: 201 });
+  } catch (error) {
+    console.error("Error creating project:", error);
+    return NextResponse.json(
+      { error: "Failed to create project" },
+      { status: 500 },
+    );
   }
-  const data = await response.json();
-  return data.secure_url;
 }
 
-async function extractAndUploadImg(data: string): Promise<string> {
-  const regex = /src="(data:image\/[^;]+;base64,[^"]+)"/g;
-  const matches = [...data.matchAll(regex)];
+export async function PUT(request: NextRequest) {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-  const replacements = await Promise.all(
-    matches.map(async (match) => {
-      const base64 = match[1];
-      const uploadedUrl = await uploadBase64Image(base64);
-      return {
-        oldSrc: match[0],
-        newSrc: `src="${uploadedUrl}"`,
-      };
-    }),
-  );
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-  let updatedData = data;
-  for (const { oldSrc, newSrc } of replacements) {
-    updatedData = updatedData.replace(oldSrc, newSrc);
+    const body: ProjectInterface & { originalSlug?: string } =
+      await request.json();
+
+    if (!body.originalSlug && !body.slug) {
+      return NextResponse.json(
+        { error: "Slug or originalSlug is required" },
+        { status: 400 },
+      );
+    }
+
+    const originalSlug = body.originalSlug || body.slug;
+
+    // Check if slug is being changed and if new slug already exists
+    if (body.slug !== originalSlug) {
+      const existing = await prisma.project.findUnique({
+        where: { slug: body.slug },
+      });
+      if (existing) {
+        return NextResponse.json(
+          { error: "A project with this slug already exists" },
+          { status: 409 },
+        );
+      }
+    }
+
+    body.description = await replaceBase64ImagesInHtml(body.description);
+    body.thumbnail = await uploadBase64ImageToR2(body.thumbnail);
+    body.updated_at = new Date();
+
+    const project = await prisma.project.update({
+      where: { slug: originalSlug },
+      data: {
+        title: body.title,
+        excerpt: body.excerpt,
+        description: body.description,
+        tags: body.tags,
+        technologies: body.technologies,
+        thumbnail: body.thumbnail,
+        slug: body.slug,
+        link: body.link || "",
+        updated_at: body.updated_at,
+      },
+    });
+
+    return NextResponse.json(project);
+  } catch (error) {
+    console.error("Error updating project:", error);
+    return NextResponse.json(
+      { error: "Failed to update project" },
+      { status: 500 },
+    );
   }
-
-  return updatedData;
 }
 
-export async function POST(request: Request) {
-  const body: ProjectInterface = await request.json();
-  const db = await connectToDB();
-  body.description = await extractAndUploadImg(body.description);
-  body.thumbnail = await uploadBase64Image(body.thumbnail);
-  body.slug = slugify(body.title);
+export async function DELETE(request: NextRequest) {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-  body.updated_at = new Date();
-  body.created_at = new Date();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-  const { _id, ...rest } = body; //eslint-disable-line
-  db.collection("projects").insertOne(rest);
+    const { searchParams } = new URL(request.url);
+    const slug = searchParams.get("slug");
 
-  return new Response(JSON.stringify(body), { status: 201 });
+    if (!slug) {
+      return NextResponse.json(
+        { error: "Slug is required" },
+        { status: 400 },
+      );
+    }
+
+    await prisma.project.delete({
+      where: { slug },
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting project:", error);
+    return NextResponse.json(
+      { error: "Failed to delete project" },
+      { status: 500 },
+    );
+  }
 }

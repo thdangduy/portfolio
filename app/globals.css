@@ -11,6 +11,10 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
+  /* Font Families */
+  --font-family-sans: 'Google Sans', sans-serif;
+  --font-family-mono: 'Google Sans Code', monospace;
+
   /* Color Mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -79,6 +83,27 @@
   font-family: "SpeedBeast";
   src: url("/Game Of Squids.ttf") format("truetype");
   font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  src: url("/fonts/GoogleSans-VariableFont_GRAD,opsz,wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  src: url("/fonts/GoogleSans-Italic-VariableFont_GRAD,opsz,wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Google Sans Code";
+  src: url("/fonts/GoogleSansCode-VariableFont_MONO,wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
   font-style: normal;
 }
 
@@ -154,4 +179,20 @@
   body::-webkit-scrollbar {
     display: none;
   }
+}
+
+@keyframes now-playing-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  90% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-now-playing-marquee {
+  animation: now-playing-marquee 20s linear infinite;
 }

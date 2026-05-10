@@ -4,13 +4,21 @@ import Image from "@tiptap/extension-image";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { default as NextImage } from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import { ZodIssue } from "zod";
 
 import api from "@/api";
+import { getProjectBySlug } from "@/lib/actions/projects";
 import { ProjectFormSchema } from "@/lib/schema/project.types";
 
-const ProjectForm = () => {
+interface ProjectFormProps {
+  projectSlug?: string;
+}
+
+const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
+  const router = useRouter();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     title: "",
@@ -27,6 +35,8 @@ const ProjectForm = () => {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [previewHTML, setPreviewHTML] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -41,7 +51,7 @@ const ProjectForm = () => {
         },
       }),
     ],
-    content: "<p>Hello World!</p>",
+    content: "<p></p>",
     onUpdate: ({ editor }) => {
       setPreviewHTML(editor.getHTML());
     },
@@ -56,6 +66,45 @@ const ProjectForm = () => {
       editor.off("update", updatePreview);
     };
   }, [editor]);
+
+  // Load existing project if editing
+  useEffect(() => {
+    if (!projectSlug) return;
+
+    const loadProject = async () => {
+      setIsLoading(true);
+      try {
+        const project = await getProjectBySlug(projectSlug);
+        if (project) {
+          setFormData({
+            title: project.title || "",
+            excerpt: project.excerpt || "",
+            tags: project.tags || [],
+            technologies: project.technologies || [],
+            thumbnail: project.thumbnail || "",
+            slug: project.slug || "",
+            link: project.link || "",
+            created_at: project.created_at?.toString() || "",
+            updated_at: project.updated_at?.toString() || "",
+            description: project.description || "",
+          });
+          setSelectedImage(project.thumbnail || null);
+          if (editor) {
+            editor.commands.setContent(project.description || "<p></p>");
+            setPreviewHTML(project.description || "");
+          }
+          setIsEditing(true);
+        }
+      } catch (error) {
+        console.error("Error loading project:", error);
+        toast.error("Failed to load project");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProject();
+  }, [projectSlug, editor]);
 
   const insertImage = (file: File) => {
     const reader = new FileReader();
@@ -95,23 +144,31 @@ const ProjectForm = () => {
       return;
     }
 
-    console.log("Valid submission:", result.data);
-    const res = await api.post("/projects", result.data);
-    if (res.status === 201) {
-      setFormData({
-        title: "",
-        excerpt: "",
-        tags: [],
-        technologies: [],
-        thumbnail: "",
-        slug: "",
-        link: "",
-        created_at: "",
-        updated_at: "",
-        description: "",
-      });
-      setSelectedImage(null);
-      setErrors({});
+    setIsLoading(true);
+    try {
+      const method = isEditing ? "PUT" : "POST";
+      const payload = isEditing
+        ? { ...result.data, originalSlug: projectSlug }
+        : result.data;
+
+      const res = await api[method.toLowerCase() as "post" | "put"](
+        "/projects",
+        payload,
+      );
+
+      if (res.status === 201 || res.status === 200) {
+        toast.success(
+          isEditing ? "Project updated successfully!" : "Project created successfully!",
+        );
+        router.push("/projects");
+      } else {
+        toast.error("Failed to save project");
+      }
+    } catch (error) {
+      console.error("Error saving project:", error);
+      toast.error("Failed to save project");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -119,7 +176,9 @@ const ProjectForm = () => {
     <div className="max-w-7xl mx-auto p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <h2 className="text-lg font-semibold mb-3">Project Details</h2>
+          <h2 className="text-lg font-semibold mb-3">
+            {isEditing ? "Edit Project" : "Create New Project"}
+          </h2>
 
           <ImageUpload
             selectedImage={selectedImage}
@@ -191,6 +250,7 @@ const ProjectForm = () => {
               <input
                 type="text"
                 placeholder="web, frontend, react (comma separated)"
+                defaultValue={formData.tags.join(", ")}
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
@@ -214,6 +274,7 @@ const ProjectForm = () => {
               <input
                 type="text"
                 placeholder="React, TypeScript, Node.js (comma separated)"
+                defaultValue={formData.technologies.join(", ")}
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
@@ -239,7 +300,7 @@ const ProjectForm = () => {
               {editor && (
                 <EditorContent
                   editor={editor}
-                  className="min-h-[150px] border border-gray-300 rounded-md px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500"
+                  className="min-h-37.5 border border-gray-300 rounded-md px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500"
                 />
               )}
               {errors.description && (
@@ -271,16 +332,21 @@ const ProjectForm = () => {
             <button
               type="submit"
               onClick={handleSubmit}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+              disabled={isLoading}
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:opacity-50"
             >
-              Submit Project
+              {isLoading
+                ? "Saving..."
+                : isEditing
+                  ? "Update Project"
+                  : "Create Project"}
             </button>
           </div>
         </div>
         <div className="order-2 md:order-1">
           <div className="sticky top-4">
             <h2 className="text-lg font-semibold mb-3">Live Preview</h2>
-            <div className="border rounded-lg p-4  min-h-[400px]">
+            <div className="border rounded-lg p-4  min-h-100">
               {selectedImage && (
                 <NextImage
                   src={selectedImage}

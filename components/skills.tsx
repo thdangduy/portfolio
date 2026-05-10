@@ -1,10 +1,29 @@
 "use client";
+import {
+  SiDocker,
+  SiErpnext,
+  SiFrappe,
+  SiGit,
+  SiMongodb,
+  SiN8n,
+  SiProxmox,
+  SiPython,
+  SiUbuntu,
+  SiWireguard,
+} from "@icons-pack/react-simple-icons";
+import { IconType } from "@icons-pack/react-simple-icons";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { BlurFade } from "@/components/ui/blur-fade";
-import { AlbertSans } from "@/fonts";
+import { GoogleSans } from "@/fonts";
 import { cn } from "@/lib/utils";
+
+interface Tool {
+  name: string;
+  icon: string | IconType;
+  color?: string;
+}
 
 interface Language {
   name: string;
@@ -17,33 +36,41 @@ interface SkillsProps {
 
 const Skills = ({ languages }: SkillsProps) => {
   const competencies = [
-    "Backend Development",
-    "Frontend Development",
-    "Database Architecture",
-    "API Design",
+    "Automation & Workflows",
+    "Infrastructure & Virtualization",
+    "Networking",
     "System Optimization",
-    "Cloud Infrastructure",
+    "Database Management",
+    "Logistics Operations & Optimization",
   ];
 
-  const toolsGrid = [
-    { name: "Python", icon: "/icons/Python-Dark.svg" },
-    { name: "TypeScript", icon: "/icons/TypeScript.svg" },
-    { name: "Go", icon: "/icons/Go.svg" },
+  const toolsGrid: Tool[] = [
+    { name: "Python", icon: SiPython, color: "#3776AB" },
+    { name: "Proxmox", icon: SiProxmox, color: "#E57000" },
+    { name: "ERPNext", icon: SiErpnext, color: "#0089FF" },
+    { name: "Ubuntu", icon: SiUbuntu, color: "#E95420" },
+    { name: "Git", icon: SiGit, color: "#F05032" },
+    { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+    { name: "Frappe", icon: SiFrappe, color: "#0089FF" },
+    { name: "Docker", icon: SiDocker, color: "#2496ED" },
+    { name: "n8n", icon: SiN8n, color: "#EA4B71" },
+    { name: "Wireguard", icon: SiWireguard, color: "#88171A" },
 
-    { name: "Next.js", icon: "/icons/NextJS-Dark.svg" },
-    { name: "React", icon: "/icons/React-Dark.svg" },
-    { name: "FastAPI", icon: "/icons/FastAPI.svg" },
+    { name: "Python", icon: SiPython, color: "#3776AB" },
+    { name: "Proxmox", icon: SiProxmox, color: "#E57000" },
+    { name: "ERPNext", icon: SiErpnext, color: "#0089FF" },
+    { name: "Ubuntu", icon: SiUbuntu, color: "#E95420" },
+    { name: "Git", icon: SiGit, color: "#F05032" },
+    { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+    { name: "Frappe", icon: SiFrappe, color: "#0089FF" },
+    { name: "Docker", icon: SiDocker, color: "#2496ED" },
+    { name: "n8n", icon: SiN8n, color: "#EA4B71" },
+    { name: "Wireguard", icon: SiWireguard, color: "#88171A" },
 
-    { name: "PostgreSQL", icon: "/icons/PostgreSQL-Dark.svg" },
-    { name: "MongoDB", icon: "/icons/MongoDB.svg" },
-    { name: "Redis", icon: "/icons/Redis-Dark.svg" },
-
-    { name: "Docker", icon: "/icons/Docker.svg" },
-    { name: "Git", icon: "/icons/Git.svg" },
-    { name: "Linux", icon: "/icons/Linux-Dark.svg" },
-    { name: "AWS", icon: "/icons/AWS-Dark.svg" },
-    { name: "Nginx", icon: "/icons/Nginx.svg" },
   ];
+
+  const row1 = toolsGrid.slice(0, 10);
+  const row2 = toolsGrid.slice(10, 20);
 
   const displayLanguages = languages ? languages.slice(0, 5) : [];
 
@@ -52,10 +79,32 @@ const Skills = ({ languages }: SkillsProps) => {
       id="skills"
       className={cn(
         "relative min-h-screen w-full overflow-hidden text-white flex items-center",
-        AlbertSans.className,
+        GoogleSans.variable,
       )}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+      <style>{`
+        @keyframes marquee-ltr {
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
+        }
+        @keyframes marquee-rtl {
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
+        }
+        .animate-marquee-ltr {
+          animation: marquee-ltr 60s linear infinite reverse;
+          will-change: transform;
+        }
+        .animate-marquee-rtl {
+          animation: marquee-rtl 45s linear infinite;
+          will-change: transform;
+        }
+        .marquee-row:hover .animate-marquee-ltr,
+        .marquee-row:hover .animate-marquee-rtl {
+          animation-play-state: paused !important;
+        }
+      `}</style>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10 w-full">
         <div className="flex flex-col gap-24">
           <BlurFade delay={0.25} inView>
             <div>
@@ -78,25 +127,62 @@ const Skills = ({ languages }: SkillsProps) => {
           </BlurFade>
 
           <BlurFade delay={0.35} inView>
-            <div className="flex flex-wrap gap-8 items-center justify-start">
-              {toolsGrid.map((tool, idx) => (
-                <div
-                  key={idx}
-                  className="flex flex-col items-center gap-3 group"
-                >
-                  <div className="relative w-8 h-8 md:w-12 md:h-12 transition-transform">
-                    <Image
-                      src={tool.icon}
-                      alt={tool.name}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <span className="text-xs text-white/80 font-medium group-hover:text-white transition-colors">
-                    {tool.name}
-                  </span>
+            <div className="flex flex-col gap-6 w-full max-w-2xl overflow-hidden py-4 mask-[linear-gradient(to_right,transparent,white_15%,white_85%,transparent)]">
+              {/* Row 1: Marquee Left to Right (LTR) */}
+              <div className="relative flex overflow-hidden z-20 marquee-row pointer-events-auto">
+                <div className="flex w-max items-center animate-marquee-ltr py-2">
+                  {[...row1, ...row1].map((tool, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col items-center gap-3 group/item shrink-0 mr-10 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 duration-500 ease-in-out"
+                    >
+                      <div className="relative w-8 h-8 md:w-12 md:h-12 transition-transform">
+                        {typeof tool.icon === 'string' ? (
+                          <Image
+                            src={tool.icon}
+                            alt={tool.name}
+                            fill
+                            className="object-contain"
+                          />
+                        ) : (
+                          <tool.icon className="w-full h-full" color={tool.color} />
+                        )}
+                      </div>
+                      <span className="text-xs text-white/80 font-medium group-hover/item:text-white transition-colors">
+                        {tool.name}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* Row 2: Marquee Right to Left (RTL) */}
+              <div className="relative flex overflow-hidden z-20 marquee-row pointer-events-auto">
+                <div className="flex w-max items-center animate-marquee-rtl py-2">
+                  {[...row2, ...row2].map((tool, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col items-center gap-3 group/item shrink-0 mr-10 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 duration-500 ease-in-out"
+                    >
+                      <div className="relative w-8 h-8 md:w-12 md:h-12 transition-transform">
+                        {typeof tool.icon === 'string' ? (
+                          <Image
+                            src={tool.icon}
+                            alt={tool.name}
+                            fill
+                            className="object-contain"
+                          />
+                        ) : (
+                          <tool.icon className="w-full h-full" color={tool.color} />
+                        )}
+                      </div>
+                      <span className="text-xs text-white/80 font-medium group-hover/item:text-white transition-colors">
+                        {tool.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </BlurFade>
 

@@ -29,11 +29,11 @@ export async function generateMetadata({
   const project = await getProject(slug);
   if (!project)
     return {
-      title: "Project Not Found | Avisek Ray (biisal)",
+      title: "Project Not Found | Thái Duy Portfolio",
       description: "The project you are looking for was not found.",
     };
 
-  const title = `${project.title} | Avisek Ray Projects`;
+  const title = `${project.title} | Thái Duy Projects`;
   const description = project.excerpt;
   const image = project.thumbnail;
 
@@ -44,7 +44,7 @@ export async function generateMetadata({
       title,
       description,
       type: "website",
-      url: `https://biisal.codeltix.com/project/${slug}`,
+      url: `https://thaiduy.store/project/${slug}`,
       images: image
         ? [
             {

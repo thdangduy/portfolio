@@ -3,6 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import {
+  replaceBase64ImagesInMarkdown,
+  uploadBase64ImageToR2,
+} from "@/lib/cloudflare-r2";
 
 export async function GET(request: NextRequest) {
   try {
@@ -53,14 +57,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const uploadedCoverImage = coverImage
+      ? await uploadBase64ImageToR2(coverImage)
+      : undefined;
+    const uploadedContent = await replaceBase64ImagesInMarkdown(content);
+
     const post = await prisma.blogPost.create({
       data: {
         title,
         excerpt,
-        content,
+        content: uploadedContent,
         slug,
         authorName: author.name,
-        coverImage,
+        coverImage: uploadedCoverImage,
         published: published || false,
       },
     });
@@ -107,15 +116,20 @@ export async function PUT(request: NextRequest) {
       }
     }
 
+    const uploadedCoverImage = coverImage
+      ? await uploadBase64ImageToR2(coverImage)
+      : undefined;
+    const uploadedContent = await replaceBase64ImagesInMarkdown(content);
+
     const post = await prisma.blogPost.update({
       where: { slug: originalSlug || slug },
       data: {
         title,
         excerpt,
-        content,
+        content: uploadedContent,
         slug,
         authorName: author.name,
-        coverImage,
+        coverImage: uploadedCoverImage,
         published: published,
       },
     });

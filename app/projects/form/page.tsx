@@ -1,7 +1,23 @@
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+
 import ProjectForm from "@/components/project/form";
+import { auth } from "@/lib/auth";
 
-const page = () => {
-  return <ProjectForm />;
-};
+export default async function ProjectFormPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ slug?: string }>;
+}) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-export default page;
+  if (!session) {
+    redirect("/login");
+  }
+
+  const { slug } = await searchParams;
+
+  return <ProjectForm projectSlug={slug} />;
+}

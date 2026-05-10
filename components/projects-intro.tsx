@@ -1,14 +1,23 @@
+import { headers } from "next/headers";
 import Link from "next/link";
 
 import { Project } from "@/.generated/client";
+import { ProjectAdminControls } from "@/components/project/admin-controls";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 import ProjectSmallCard from "./project-small-card";
 import { BlurFade } from "./ui/blur-fade";
 
 const ProjectsIntro = async () => {
   let projects: Project[] = [];
+  let session = null;
+
   try {
+    const headersList = await headers();
+    session = await auth.api.getSession({
+      headers: headersList,
+    });
     projects = await prisma.project.findMany();
   } catch (error) {
     console.error("Failed to fetch projects:", error);
@@ -64,7 +73,7 @@ const ProjectsIntro = async () => {
                     className={`
 										grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8 
 										p-6 md:p-8 rounded-2xl 
-										bg-gradient-to-br from-muted/5 via-muted/10 to-transparent
+										bg-linear-to-br from-muted/5 via-muted/10 to-transparent
 										border border-white/5
 										group-hover:border-primary/30 
 										group-hover:shadow-2xl group-hover:shadow-primary/10
@@ -96,8 +105,11 @@ const ProjectsIntro = async () => {
                         {String(index + 1).padStart(2, "0")}
                       </div>
 
-                      <h3 className="text-2xl md:text-3xl font-bold text-white group-hover:text-primary transition-colors duration-300">
-                        {project.title}
+                      <h3 className="text-2xl md:text-3xl font-bold text-white group-hover:text-primary transition-colors duration-300 flex justify-between items-start">
+                        <span>{project.title}</span>
+                        {session && (
+                          <ProjectAdminControls slug={project.slug} />
+                        )}
                       </h3>
 
                       <p className="text-muted-foreground text-sm md:text-base leading-relaxed line-clamp-3">

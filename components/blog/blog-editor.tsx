@@ -28,7 +28,7 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
   const [excerpt, setExcerpt] = useState(initialPost?.excerpt || "");
   const [content, setContent] = useState(initialPost?.content || "");
   const [authorName, setAuthorName] = useState(
-    initialPost?.authorName || "Avisek",
+    initialPost?.authorName || "Thái Duy",
   );
   const [coverImage, setCoverImage] = useState(initialPost?.coverImage || "");
   const [slug, setSlug] = useState(initialPost?.slug || "");
@@ -86,6 +86,22 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
   };
 
   // Custom markdown completions
+  const handleCoverImageUpload = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result;
+      if (typeof result === "string") {
+        setCoverImage(result);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   const markdownCompletions = (context: CompletionContext) => {
     const word = context.matchBefore(/^\w*/); // Simple match, can be improved
     if (!context.explicit && (!word || word.from === word.to)) return null;
@@ -160,7 +176,7 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
       setTitle(draft.title ?? initialPost?.title ?? "");
       setExcerpt(draft.excerpt ?? initialPost?.excerpt ?? "");
       setContent(draft.content ?? initialPost?.content ?? "");
-      setAuthorName(draft.authorName ?? initialPost?.authorName ?? "Avisek");
+      setAuthorName(draft.authorName ?? initialPost?.authorName ?? "Thái Duy");
       setCoverImage(draft.coverImage ?? initialPost?.coverImage ?? "");
       setSlug(draft.slug ?? initialPost?.slug ?? "");
     } catch (error) {
@@ -217,7 +233,7 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
     <div
       className={cn("min-h-screen p-8 text-blog-fg", JetBrainsMono.className)}
     >
-      <div className="max-w-[1800px] mx-auto">
+      <div className="max-w-450 mx-auto">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-blog-orange mb-2">
             Blog Editor
@@ -288,6 +304,32 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
                 </div>
 
                 <div>
+                  <Label htmlFor="coverImageFile" className="text-blog-fg">
+                    Upload Cover Image (optional)
+                  </Label>
+                  <input
+                    id="coverImageFile"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCoverImageUpload}
+                    className="mt-2 w-full text-sm text-blog-fg file:mr-4 file:rounded-full file:border-0 file:bg-blog-orange file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blog-black"
+                  />
+                </div>
+
+                {coverImage ? (
+                  <div className="mt-3">
+                    <p className="text-sm text-blog-fg opacity-80 mb-2">
+                      Cover image preview:
+                    </p>
+                    <img
+                      src={coverImage}
+                      alt="Cover preview"
+                      className="w-full rounded-md border border-blog-inactive-border"
+                    />
+                  </div>
+                ) : null}
+
+                <div>
                   <Label htmlFor="slug" className="text-blog-fg">
                     Slug (optional)
                   </Label>
@@ -316,7 +358,7 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
                 Write your content in Markdown format (Ctrl+Space for
                 suggestions)
               </p>
-              <div className="h-[600px] overflow-hidden rounded-md border border-blog-cyan bg-blog-black">
+              <div className="h-150 overflow-hidden rounded-md border border-blog-cyan bg-blog-black">
                 <CodeMirror
                   value={content}
                   height="600px"

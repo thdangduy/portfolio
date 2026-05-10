@@ -11,20 +11,20 @@ import { auth, Session } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Blog | Avisek Ray (biisal)",
+  title: "Blog | Thái Duy - SysAdmin Notes & Automation Lab",
   description:
-    "Thoughts, ideas, and code snippets from the void. Exploring full-stack development, cloud infrastructure, and software engineering.",
+    "Documenting my journey in self-taught System Administration, infrastructure experiments, and practical automation solutions driven by Logistics logic.",
   openGraph: {
-    title: "Blog | Avisek Ray (biisal)",
+    title: "Blog | Thái Duy - SysAdmin Notes & Automation Lab",
     description:
-      "Thoughts, ideas, and code snippets from the void. Exploring full-stack development, cloud infrastructure, and software engineering.",
-    url: "https://biisal.codeltix.com/blog",
+      "A deep dive into self-hosted infrastructure, Docker orchestration, and n8n automation workflows.",
+    url: "https://thaiduy.digital/blog",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Blog | Avisek Ray (biisal)",
-    description: "Thoughts, ideas, and code snippets from the void.",
+    title: "Blog | Thái Duy - SysAdmin Notes & Automation Lab",
+    description: "Insights into infrastructure optimization and operational automation.",
   },
 };
 

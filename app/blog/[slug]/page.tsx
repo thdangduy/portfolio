@@ -19,15 +19,16 @@ export async function generateMetadata({
 
   if (!post) {
     return {
-      title: "Post Not Found | Avisek Ray",
+      title: "Post Not Found | Thái Duy Portfolio",
+      description: "The blog post you are looking for was not found.",
     };
   }
 
-  const title = `${post.title} | Avisek Ray Blog`;
+  const title = `${post.title} | Thái Duy Blog`;
   const description = post.excerpt;
   const ogImage =
     post.coverImage ||
-    "https://res.cloudinary.com/dorxspa9g/image/upload/v1760437739/green-stick_holso5.png";
+    `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/hero4.png`;
 
   return {
     title,
@@ -36,7 +37,7 @@ export async function generateMetadata({
       title,
       description,
       type: "article",
-      url: `https://biisal.codeltix.com/blog/${slug}`,
+      url: `https://thaiduy.store/blog/${slug}`,
       images: [
         {
           url: ogImage,
