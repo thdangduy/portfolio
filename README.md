@@ -30,9 +30,23 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 - **Interactive UI**: Smooth transitions, scroll animations, and a polished dark mode aesthetic.
 - **Contact Form**: Direct integration with Telegram for instant message delivery.
 - **Real-time Stats**: Live coding statistics via Wakatime API.
+- **Dynamic Audio Waveform**: An intelligent SVG visualizer integrated into the navbar that reflects your current listening activity.
 - **SEO Optimized**: Built-in metadata and Open Graph support.
 
-## � Screenshots
+### 🎵 WaveformLine Deep Dive
+
+The `WaveformLine` component isn't just a static animation; it's a data-driven visualizer that synchronizes with your Last.fm/YouTube Music status:
+
+- **Genre-Aware Animation**: It parses the current track's metadata (title and artist) to "guess" the music genre using an internal keyword mapping system.
+- **Adaptive Physics**: Depending on the detected genre, the waveform automatically adjusts:
+  - **Rock/Metal**: High amplitude and high frequency for an energetic look.
+  - **Pop/Dance**: Standard rhythmic pulse.
+  - **Lo-fi/Jazz/Ambient**: Low amplitude and slow speed for a calm, relaxing vibe.
+  - **Classical**: Precise, high-frequency waves with moderate speed.
+- **Smooth Transitions**: Built with **Framer Motion**, the waveform gracefully morphs between different states when the music genre changes.
+- **Real-time Connectivity**: Fetches live "Now Playing" data to ensure the visualizer stays in sync with your actual activity.
+
+## Screenshots
 
 ### Projects
 
@@ -149,10 +163,6 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 - `/public`: Static assets.
 
 ## 👤 Author
-
----
-
----
 
 `// Built with ❤️ by Thai Duy. Inspired by` [Avisek Ray (biisal)][def]
 
