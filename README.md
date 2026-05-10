@@ -1,8 +1,8 @@
-# Avisek Ray (biisal) - Portfolio
+# Portfolio
 
 A modern, full-stack developer portfolio built with Next.js 16, React 19, and Tailwind CSS v4. This project showcases my skills, projects, and thoughts through a clean, dark-themed interface with smooth animations and robust backend integration.
 
-## Live Link [biisal.codeltix.com](https://biisal.codeltix.com)
+## Live Link [portfolio.thaiduy.digital](https://portfolio.thaiduy.digital)
 
 ![Portfolio Preview](./demo/hero.png)
 
@@ -16,11 +16,12 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 - **UI Components**: [Radix UI](https://www.radix-ui.com/) / Shadcn-like Implementation
 - **Icons**: [Lucide React](https://lucide.dev/)
+- **Simple Icons** : [simpleicons](https://github.com/icons-pack/react-simple-icons)
 - **Content Management**: Custom Blog & Project System
 - **Integrations**:
-  - Telegram Bot (Contact Form)
+- Telegram Bot (Contact Form)
 - Cloudflare R2 (Image Hosting)
-  - Wakatime (Coding Stats)
+- Wakatime (Coding Stats)
 
 ## ✨ Features
 
@@ -50,64 +51,67 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 ### Prerequisites
 
 - Node.js (v18+ recommended)
-- MongoDB Database
-- Cloudinary Account
+- MongoDB Database or MongoDB Atlas
+- Cloudflare R2 Storage Account
 - Telegram Bot Token (optional, for contact form)
 
 ### Installation
 
-1.  **Clone the repository:**
+1. **Clone the repository:**
 
-    ```bash
-    git clone https://github.com/biisal/portfolio.git
-    cd portfolio
-    ```
+   ```bash
+   git clone https://github.com/thdangduy/portfolio.git
+   cd portfolio
+   ```
 
-2.  **Install dependencies:**
+2. **Install dependencies:**
 
-    ```bash
-    npm install
-    # or
-    pnpm install
-    # or
-    bun install
-    ```
+   ```bash
+   npm install
+   # or
+   pnpm install
+   # or
+   bun install (recommended)
+   ```
 
-3.  **Environment Setup:**
+3. **Environment Setup:**
 
-    Rename `.env.example` to `.env` and fill in your secrets:
+   Rename `.env.example` to `.env` and fill in your secrets:
 
-    ```bash
-    cp .env.example .env
-    ```
+   ```bash
+   cp .env.example .env
+   ```
 
-    Required variables:
-    - `DATABASE_URL`: MongoDB connection string
-    - `BETTER_AUTH_SECRET`: Secret for authentication
-    - `ADMIN_SECRET`: Secret header for admin actions
-    - `TELEGRAM_BOT_TOKEN` & `TELEGRAM_CHAT_ID`: For contact form
-    - `CLOUDFLARE_R2_ENDPOINT`: Cloudflare R2 endpoint
-    - `CLOUDFLARE_R2_BUCKET`: R2 bucket name
-    - `CLOUDFLARE_R2_ACCESS_KEY_ID`: R2 access key ID
-    - `CLOUDFLARE_R2_SECRET_ACCESS_KEY`: R2 secret key
-    - `NEXT_PUBLIC_CLOUDFLARE_R2_BASE_URL`: Public R2 base URL for uploaded images
+   Required variables:
+   - `DATABASE_URL`: MongoDB connection string
+   - `BETTER_AUTH_SECRET`: Secret for authentication
+   - `ADMIN_SECRET`: Secret header for admin actions
+   - `TELEGRAM_BOT_TOKEN` & `TELEGRAM_CHAT_ID`: For contact form
+   - `CLOUDFLARE_R2_ENDPOINT`: Cloudflare R2 endpoint
+   - `CLOUDFLARE_R2_BUCKET`: R2 bucket name
+   - `CLOUDFLARE_R2_ACCESS_KEY_ID`: R2 access key ID
+   - `CLOUDFLARE_R2_SECRET_ACCESS_KEY`: R2 secret key
+   - `NEXT_PUBLIC_CLOUDFLARE_R2_BASE_URL`: Public R2 base URL for uploaded images
+   - `LASTFM_API_KEY`: Last.fm API key
+   - `LASTFM_USER`: Last.fm username
+   - `WAKATIME_API_KEY`: Wakatime API key - change url at /home/ubuntu/portfolio/app/page.tsx
 
-4.  **Database Setup:**
+4. **Database Setup:**
 
-    Generate Prisma client and push schema:
+   Generate Prisma client and push schema:
 
-    ```bash
-    npx prisma generate
-    npx prisma db push
-    ```
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
 
-5.  **Run Development Server:**
+5. **Run Development Server:**
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
-    Open [http://localhost:3000](http://localhost:3000) to view the site.
+   Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ## 🛣️ Routes
 
@@ -122,8 +126,8 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 
 ### Admin Routes (Protected)
 
-- `/blog/editor`: Create/Edit Blog Posts
-- `/projects/form`: Create/Edit Projects
+- `/blog/editor`: Create/Edit Blog Posts (Admin can edit or remove posts)
+- `/projects/form`: Create/Edit Projects (Admin can edit or remove projects)
 
 ### API Endpoints
 
@@ -142,13 +146,14 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 
 ## 👤 Author
 
-**Avisek Ray (biisal)**
+---
 
-- Website: [biisal.codeltix.com](https://biisal.codeltix.com)
-- GitHub: [@biisal](https://github.com/biisal)
-- LinkedIn: [Avisek Ray](https://www.linkedin.com/in/biisal)
-- X (Twitter): [@biisal18](https://x.com/biisal18)
+---
+
+`// Built with ❤️ by Thai Duy. Inspired by` [Avisek Ray (biisal)][def]
 
 ## 📄 License
 
 This project is licensed under the MIT License.
+
+[def]: https://github.com/biisal
