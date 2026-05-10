@@ -18,13 +18,14 @@ export const metadata: Metadata = {
     title: "Blog | Thái Duy - SysAdmin Notes & Automation Lab",
     description:
       "A deep dive into self-hosted infrastructure, Docker orchestration, and n8n automation workflows.",
-    url: "https://thaiduy.digital/blog",
+    url: "https://portfolio.thaiduy.digital/blog",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Blog | Thái Duy - SysAdmin Notes & Automation Lab",
-    description: "Insights into infrastructure optimization and operational automation.",
+    description:
+      "Insights into infrastructure optimization and operational automation.",
   },
 };
 

@@ -12,8 +12,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { GoogleSans } from "@/fonts";
 import { cn } from "@/lib/utils";
 
-const heroImgUrl =
-  `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/hero4.png`;
+const heroImgUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/hero4.png`;
 
 export const viewport = {
   width: "device-width",
@@ -31,7 +30,8 @@ export const metadata: Metadata = {
   keywords: [
     "thaiduy",
     "Thái Duy",
-    "thaiduy.digital",
+    "portfolio",
+    "portfolio.thaiduy.digital",
     "SysAdmin Vietnam",
     "Infrastructure Engineer",
     "Automation Expert",
@@ -44,12 +44,12 @@ export const metadata: Metadata = {
     "Oracle Cloud ARM",
     "Portfolio",
   ],
-  authors: [{ name: "Thái Duy", url: "https://thaiduy.digital" }],
+  authors: [{ name: "Thái Duy", url: "https://portfolio.thaiduy.digital" }],
   openGraph: {
     title: "Thái Duy | Self-taught SysAdmin & Infrastructure lover",
     description:
       "Explore the portfolio of Thái Duy, focusing on system administration, infrastructure, and business automation. Expert in n8n, Docker, and Logistics-driven tech solutions.",
-    url: "https://thaiduy.digital",
+    url: "https://portfolio.thaiduy.digital",
     siteName: "Thái Duy Portfolio",
     locale: "vi_VN",
     type: "website",

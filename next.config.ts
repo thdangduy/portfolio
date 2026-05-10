@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_CLOUDFLARE_R2_BASE_URL:
       process.env.NEXT_PUBLIC_CLOUDFLARE_R2_BASE_URL,
   },
-  allowedDevOrigins: ['thaiduy.digital'],
+  allowedDevOrigins: ["portfolio.thaiduy.digital"],
 };
 
 export default nextConfig;
