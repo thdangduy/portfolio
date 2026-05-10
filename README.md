@@ -50,7 +50,7 @@ A modern, full-stack developer portfolio built with Next.js 16, React 19, and Ta
 
 ![Music Player](./demo/music-player.png)
 
-## �🛠️ Getting Started
+## 🛠️ Getting Started
 
 ### Prerequisites
 
