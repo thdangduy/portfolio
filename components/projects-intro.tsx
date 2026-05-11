@@ -3,8 +3,8 @@ import Link from "next/link";
 
 import { Project } from "@/.generated/client";
 import { ProjectAdminControls } from "@/components/project/admin-controls";
-import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 import ProjectSmallCard from "./project-small-card";
 import { BlurFade } from "./ui/blur-fade";

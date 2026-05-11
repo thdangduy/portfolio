@@ -10,7 +10,7 @@ export interface SmoothCursorProps {
     restDelta: number;
   };
 }
-export function SmoothCursor(_props: SmoothCursorProps) {
+export function SmoothCursor() {
   useEffect(() => {
     // Đảm bảo con trỏ mặc định luôn hiển thị khi component này được render
     document.body.style.cursor = "auto";

@@ -5,6 +5,7 @@ import { markdown, markdownKeymap } from "@codemirror/lang-markdown";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { EditorView, keymap } from "@codemirror/view";
 import CodeMirror from "@uiw/react-codemirror";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -321,7 +322,12 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
                     <p className="text-sm text-blog-fg opacity-80 mb-2">
                       Cover image preview:
                     </p>
-                    <img
+                    <Image
+                      width={800} // Add appropriate width
+                      height={450} // Add appropriate height
+                      // You might need to adjust layout and objectFit based on your design
+                      // layout="responsive" // Consider using layout="responsive" or fill
+                      // objectFit="cover" // Adjust as needed
                       src={coverImage}
                       alt="Cover preview"
                       className="w-full rounded-md border border-blog-inactive-border"

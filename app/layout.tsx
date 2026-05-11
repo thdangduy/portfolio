@@ -2,10 +2,12 @@ import "./globals.css";
 
 import { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
+import { ReactNode } from "react";
 
 import Dock from "@/components/dock";
 import GlobalBackground from "@/components/global-background";
 import Navbar from "@/components/navbar";
+import { NowPlayingProvider } from "@/components/now-playing";
 import SmoothScroll from "@/components/smooth-scroll";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { Toaster } from "@/components/ui/sonner";
@@ -71,22 +73,20 @@ export const metadata: Metadata = {
     images: [heroImgUrl],
   },
 };
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className={cn("text-white cursor-none", GoogleSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="dark">
-          <GlobalBackground />
-          <Navbar />
-          <Dock />
-          <SmoothScroll>{children}</SmoothScroll>
-          <Toaster />
+          <NowPlayingProvider>
+            <GlobalBackground />
+            <Navbar />
+            <Dock />
+            <SmoothScroll>{children}</SmoothScroll>
+            <Toaster />
 
-          <SmoothCursor />
+            <SmoothCursor />
+          </NowPlayingProvider>
         </ThemeProvider>
       </body>
     </html>

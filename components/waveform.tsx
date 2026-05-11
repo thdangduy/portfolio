@@ -1,96 +1,14 @@
 "use client";
+
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react"; // Keep useMemo for genreConfig
 
-export type NowPlayingData = {
-  isPlaying: boolean;
-  name: string;
-  artist: string;
-  album: string;
-  trackUrl: string;
-  lastfmUrl: string;
-  error?: string;
-};
-
-type Genre =
-  | "rock"
-  | "pop"
-  | "ballad"
-  | "classic"
-  | "instrumental"
-  | "orchestra"
-  | "bolero"
-  | "jazz"
-  | "blues"
-  | "bossa"
-  | "lofi"
-  | "default";
+import { useNowPlaying } from "@/components/now-playing";
 
 export const WaveformLine = () => {
-  const [data, setData] = useState<NowPlayingData>(() => ({
-    isPlaying: false,
-    name: "",
-    artist: "",
-    album: "",
-    trackUrl: "",
-    lastfmUrl: "",
-  }));
+  const { data, genre } = useNowPlaying();
   const [isHovered, setIsHovered] = useState(false);
-  const [genre, setGenre] = useState<Genre>("default");
   const [time, setTime] = useState(0);
-
-  const guessGenre = (name: string, artist: string): Genre => {
-    const text = `${name} ${artist}`.toLowerCase();
-
-    if (["rock", "metal", "punk", "grunge"].some((k) => text.includes(k)))
-      return "rock";
-    if (["jazz", "swing", "bebop", "soul"].some((k) => text.includes(k)))
-      return "jazz";
-    if (["blues", "r&b", "rhythm"].some((k) => text.includes(k)))
-      return "blues";
-    if ([" bossa ", "nova", "samba", "brazil"].some((k) => text.includes(k)))
-      return "bossa";
-    if (["lofi", "chill", "study", "relax"].some((k) => text.includes(k)))
-      return "lofi";
-    if (
-      ["pop", "dance", "disco", "k-pop", "v-pop"].some((k) => text.includes(k))
-    )
-      return "pop";
-    if (
-      ["ballad", "slow", "acoustic", "unplugged", "sad", "lo-fi"].some((k) =>
-        text.includes(k),
-      )
-    )
-      return "ballad";
-    if (
-      ["classic", "symphony", "mozart", "piano solo"].some((k) =>
-        text.includes(k),
-      )
-    )
-      return "classic";
-    if (
-      [
-        "instrumental",
-        "violin",
-        "guitar",
-        "saxophone",
-        "richard clayderman",
-      ].some((k) => text.includes(k))
-    )
-      return "instrumental";
-    if (
-      ["orchestra", "philharmonic", "cinematic"].some((k) => text.includes(k))
-    )
-      return "orchestra";
-    if (
-      ["bolero", "thuy nga", "tru tinh", "que huong"].some((k) =>
-        text.includes(k),
-      )
-    )
-      return "bolero";
-
-    return "default";
-  };
 
   const genreConfig = useMemo(
     () => ({
@@ -111,33 +29,6 @@ export const WaveformLine = () => {
   );
 
   useEffect(() => {
-    let active = true;
-    const fetchNowPlaying = async () => {
-      try {
-        const response = await fetch(`/api/now-playing?t=${Date.now()}`, {
-          cache: "no-store",
-          headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
-        });
-        if (!response.ok) return;
-        const json = (await response.json()) as NowPlayingData;
-        if (!active) return;
-        setData(json);
-        if (json.name && json.artist)
-          setGenre(guessGenre(json.name, json.artist));
-      } catch {
-        /* Fail silently */
-      }
-    };
-    fetchNowPlaying();
-    const interval = window.setInterval(fetchNowPlaying, 30000);
-    return () => {
-      active = false;
-      window.clearInterval(interval);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!data?.isPlaying) return;
     let frameId: number;
     const animate = (t: number) => {
       setTime(t);
@@ -145,7 +36,7 @@ export const WaveformLine = () => {
     };
     frameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frameId);
-  }, [data.isPlaying]);
+  }, [data?.isPlaying]);
 
   const generatePath = (
     phaseOffset: number,
@@ -156,7 +47,7 @@ export const WaveformLine = () => {
     const height = 24;
     if (!data?.isPlaying) return `M 0 ${height / 2} L ${width} ${height / 2}`;
 
-    const { freq, amp, speed } = genreConfig[genre];
+    const { freq, amp, speed } = genreConfig[genre as keyof typeof genreConfig];
     const points = 60;
     const baseAmplitude = 6;
     let p = `M 0 ${height / 2}`;
@@ -258,7 +149,7 @@ export const WaveformLine = () => {
             strokeWidth="2.2"
             fill="none"
             animate={
-              data.isPlaying
+              data?.isPlaying
                 ? {
                     opacity: [0.5, 1, 0.5],
                     filter: ["blur(1.5px)", "blur(4px)", "blur(1.5px)"],
@@ -274,7 +165,7 @@ export const WaveformLine = () => {
             strokeWidth="1.8"
             fill="none"
             animate={
-              data.isPlaying
+              data?.isPlaying
                 ? {
                     opacity: [0.4, 0.9, 0.4],
                     filter: ["blur(1px)", "blur(2.5px)", "blur(1px)"],
@@ -290,7 +181,7 @@ export const WaveformLine = () => {
             strokeWidth="1.4"
             fill="none"
             animate={
-              data.isPlaying
+              data?.isPlaying
                 ? {
                     opacity: [0.5, 1, 0.5],
                     filter: ["blur(1px)", "blur(3.5px)", "blur(1px)"],
@@ -307,7 +198,7 @@ export const WaveformLine = () => {
             fill="none"
             strokeLinecap="round"
             animate={
-              data.isPlaying
+              data?.isPlaying
                 ? {
                     filter: [
                       "drop-shadow(0 0 1px white)",
@@ -330,7 +221,7 @@ export const WaveformLine = () => {
             exit={{ opacity: 0, y: 10 }}
             className="absolute top-8 right-0 whitespace-nowrap bg-black/80 text-white text-[10px] px-2 py-1 rounded border border-white/10 backdrop-blur-sm"
           >
-            {data.isPlaying
+            {data?.isPlaying
               ? `Listening: ${data.name} (${genre})`
               : "Not listening"}
           </motion.div>
