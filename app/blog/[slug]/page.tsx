@@ -27,8 +27,7 @@ export async function generateMetadata({
   const title = `${post.title} | Thái Duy Blog`;
   const description = post.excerpt;
   const ogImage =
-    post.coverImage ||
-    `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/hero4.png`;
+    post.coverImage || `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/hero.png`;
 
   return {
     title,

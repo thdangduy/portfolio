@@ -12,7 +12,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { GoogleSans } from "@/fonts";
 import { cn } from "@/lib/utils";
 
-const heroImgUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/hero4.png`;
+const heroImgUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/hero.png`;
 
 export const viewport = {
   width: "device-width",

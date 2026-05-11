@@ -125,11 +125,15 @@ The `WaveformLine` component isn't just a static animation; it's a data-driven v
 
 5. **Run Development Server:**
 
-   ```bash
-   npm run dev
-   ```
+```bash
+   bun dev
+```
 
-   Open [http://localhost:3000](http://localhost:3000) to view the site.
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ## 🛣️ Routes
 
