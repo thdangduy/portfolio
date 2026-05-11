@@ -38,7 +38,14 @@ const GlobalBackground = () => {
               src="/izzac-s1-jsSbkXIs8RM-unsplash.jpg"
               alt="Background"
               className="object-cover"
+              style={{
+                imageRendering: "auto",
+                WebkitBackfaceVisibility: "hidden",
+                transform: "translateZ(0)",
+              }}
               priority
+              unoptimized
+              sizes="100vw"
             />
           </div>
         </BlurFade>

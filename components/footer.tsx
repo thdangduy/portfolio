@@ -9,7 +9,7 @@ const Footer = () => {
       <h1 className="text-xl font-thin text-white">Thank you :)</h1>
       <NowPlaying />
       <Link
-        href="https://github.com/biisal/portfolio"
+        href="https://github.com/thdangduy/portfolio"
         target="_blank"
         className="flex items-center gap-2 text-sm text-white/50 hover:text-white transition-colors"
       >
