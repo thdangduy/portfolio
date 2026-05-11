@@ -13,6 +13,7 @@ import { GoogleSans } from "@/fonts";
 import { cn } from "@/lib/utils";
 
 const heroImgUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/hero.png`;
+const faviconUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/favicon.png`;
 
 export const viewport = {
   width: "device-width",
@@ -23,7 +24,7 @@ export const viewport = {
 export const metadata: Metadata = {
   title: "Thái Duy | Self-taught SysAdmin & Infrastructure lover",
   icons: {
-    icon: heroImgUrl,
+    icon: faviconUrl,
   },
   description:
     "Thái Duy is a SysAdmin and Automation expert from Vietnam, specializing in self-hosted infrastructure, Docker, n8n workflows, and logistics operations optimization.",
