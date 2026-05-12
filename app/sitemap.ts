@@ -52,7 +52,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     return [...staticRoutes, ...projectRoutes, ...blogRoutes];
   } catch (error) {
-    console.error("Failed to load dynamic sitemap routes:", error);
+    if (!process.env.DATABASE_URL?.includes("placeholder")) {
+      console.error("Failed to load dynamic sitemap routes:", error);
+    }
     return staticRoutes;
   }
 }

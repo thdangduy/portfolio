@@ -5,7 +5,10 @@ import { APIError, createAuthMiddleware } from "better-auth/api";
 import { prisma } from "./prisma";
 
 export const auth = betterAuth({
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL:
+    process.env.BETTER_AUTH_URL ||
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    "http://localhost:3000",
   database: prismaAdapter(prisma, {
     provider: "mongodb",
   }),

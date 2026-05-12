@@ -6,8 +6,7 @@ services:
       args:
         NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
         NEXT_PUBLIC_GOOGLE_ANALYTICS: ${NEXT_PUBLIC_GOOGLE_ANALYTICS}
-        NEXT_PUBLIC_CLOUDFLARE_R2_BASE_URL: ${NEXT_PUBLIC_CLOUDFLARE_R2_BASE_URL}
-        BETTER_AUTH_URL: ${BETTER_AUTH_URL}
+        NEXT_PUBLIC_CLOUDFLARE_R2_BASE_URL: ${NEXT_PUBLIC_CLOUDFLARE_R2_BASE_URL:-http://localhost:3000}
     image: portfolio:latest
     container_name: portfolio
     restart: unless-stopped
