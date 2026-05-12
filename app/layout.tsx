@@ -15,6 +15,8 @@ import { GoogleSans } from "@/fonts";
 import { getSiteSettings, resolvePublicUrl } from "@/lib/site-settings";
 import { cn } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 export const viewport = {
   width: "device-width",
   initialScale: 1,

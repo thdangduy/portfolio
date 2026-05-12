@@ -1,10 +1,7 @@
 import { ZodError } from "zod";
 
 import { formSchema } from "@/lib/schema/contact-form.schema";
-import {
-  telegramBotToken,
-  telegramChatId as telegramChatID,
-} from "@/lib/server-config";
+import { getTelegramConfig } from "@/lib/server-config";
 
 export async function POST(request: Request) {
   try {
@@ -25,8 +22,9 @@ export async function POST(request: Request) {
       return new Response("Invalid form data.", { status: 400 });
     }
 
+    const { telegramBotToken, telegramChatId } = getTelegramConfig();
     const payload = {
-      chat_id: telegramChatID,
+      chat_id: telegramChatId,
       text: `Name: ${body.name}\nEmail: ${body.email}\nPhone: ${body.whatsapp} (WhatsApp)\nMessage: ${body.message}`,
     };
 
