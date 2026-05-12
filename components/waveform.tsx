@@ -29,6 +29,10 @@ export const WaveformLine = () => {
   );
 
   useEffect(() => {
+    if (!data?.isPlaying) {
+      return;
+    }
+
     let frameId: number;
     const animate = (t: number) => {
       setTime(t);

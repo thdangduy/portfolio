@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 /**
  * FIREFLY CONFIGURATION
@@ -42,6 +42,7 @@ const Fireflies = () => {
   const [windAffectedIds, setWindAffectedIds] = useState<Set<number>>(
     new Set(),
   );
+  const windResetTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const generateFireflies = () =>
     Array.from({ length: FIREFLY_CONFIG.TOTAL_FIREFLIES }, (_, i) => {
@@ -114,13 +115,24 @@ const Fireflies = () => {
           affected.add(nonImmune[Math.floor(Math.random() * nonImmune.length)]);
         setWindAffectedIds(affected);
         setWind(strength * FIREFLY_CONFIG.WIND_MULTIPLIER);
-        setTimeout(() => {
+        if (windResetTimeout.current) {
+          clearTimeout(windResetTimeout.current);
+        }
+
+        windResetTimeout.current = setTimeout(() => {
           setWind(0);
           setWindAffectedIds(new Set());
+          windResetTimeout.current = null;
         }, duration);
       }
     }, 25000);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (windResetTimeout.current) {
+        clearTimeout(windResetTimeout.current);
+        windResetTimeout.current = null;
+      }
+    };
   }, [fireflies]);
 
   return (

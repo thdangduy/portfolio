@@ -25,12 +25,7 @@ const stringFields = [
   "twitterDescription",
 ] as const;
 
-const listFields = [
-  "aboutParagraphs",
-  "competencies",
-  "tools",
-  "metaKeywords",
-] as const;
+const listFields = ["aboutParagraphs", "competencies", "metaKeywords"] as const;
 
 export async function GET() {
   const settings = await prisma.siteSettings.findUnique({
@@ -77,7 +72,6 @@ export async function PUT(request: Request) {
       aboutFootnote: normalized.aboutFootnote,
       skillsTitle: normalized.skillsTitle,
       competencies: normalized.competencies,
-      tools: normalized.tools,
       faviconUrl: normalized.faviconUrl,
       metaTitle: normalized.metaTitle,
       metaDescription: normalized.metaDescription,

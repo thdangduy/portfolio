@@ -1,5 +1,8 @@
 "use client";
 import {
+  SiAffine,
+  SiCaddy,
+  SiCloudflare,
   SiDocker,
   SiErpnext,
   SiFrappe,
@@ -15,6 +18,7 @@ import { IconType } from "@icons-pack/react-simple-icons";
 import { motion } from "framer-motion";
 
 import { BlurFade } from "@/components/ui/blur-fade";
+import Marquee from "@/components/ui/marquee";
 import { GoogleSans } from "@/fonts";
 import type { SiteSettings } from "@/lib/site-settings";
 import { cn } from "@/lib/utils";
@@ -46,12 +50,12 @@ const toolIcons: Record<string, Tool> = {
   python: { name: "Python", icon: SiPython, color: "#3776AB" },
   ubuntu: { name: "Ubuntu", icon: SiUbuntu, color: "#E95420" },
   wireguard: { name: "Wireguard", icon: SiWireguard, color: "#88171A" },
+  cloudflare: { name: "Cloudflare", icon: SiCloudflare, color: "#F38020" },
+  caddy: { name: "Caddy", icon: SiCaddy, color: "#1F88C0" },
+  affine: { name: "Affine", icon: SiAffine, color: "#1E96EB" },
 };
 
-const getTool = (name: string): Tool => {
-  const key = name.toLowerCase().replace(/\s+/g, "");
-  return toolIcons[key] ?? { name, icon: name.slice(0, 2).toUpperCase() };
-};
+const marqueeTools = Object.values(toolIcons);
 
 const renderToolIcon = (tool: Tool) => {
   if (typeof tool.icon === "string") {
@@ -66,10 +70,12 @@ const renderToolIcon = (tool: Tool) => {
 };
 
 const Skills = ({ languages, settings }: SkillsProps) => {
-  const toolsGrid = settings.tools.map(getTool);
-  const midpoint = Math.ceil(toolsGrid.length / 2);
-  const row1 = toolsGrid.slice(0, midpoint);
-  const row2 = toolsGrid.slice(midpoint);
+  const midpoint = Math.ceil(marqueeTools.length / 2);
+  const row1 = marqueeTools.slice(0, midpoint || marqueeTools.length);
+  const row2 = marqueeTools.slice(midpoint);
+  const marqueeRows = [row1, row2.length ? row2 : row1].filter(
+    (row) => row.length > 0,
+  );
 
   const displayLanguages = languages ? languages.slice(0, 5) : [];
 
@@ -81,28 +87,6 @@ const Skills = ({ languages, settings }: SkillsProps) => {
         GoogleSans.variable,
       )}
     >
-      <style>{`
-        @keyframes marquee-ltr {
-          0% { transform: translate3d(0, 0, 0); }
-          100% { transform: translate3d(-50%, 0, 0); }
-        }
-        @keyframes marquee-rtl {
-          0% { transform: translate3d(0, 0, 0); }
-          100% { transform: translate3d(-50%, 0, 0); }
-        }
-        .animate-marquee-ltr {
-          animation: marquee-ltr 60s linear infinite reverse;
-          will-change: transform;
-        }
-        .animate-marquee-rtl {
-          animation: marquee-rtl 45s linear infinite;
-          will-change: transform;
-        }
-        .marquee-row:hover .animate-marquee-ltr,
-        .marquee-row:hover .animate-marquee-rtl {
-          animation-play-state: paused !important;
-        }
-      `}</style>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10 w-full">
         <div className="flex flex-col gap-24">
           <BlurFade delay={0.25} inView>
@@ -127,43 +111,32 @@ const Skills = ({ languages, settings }: SkillsProps) => {
 
           <BlurFade delay={0.35} inView>
             <div className="flex flex-col gap-6 w-full max-w-2xl overflow-hidden py-4 mask-[linear-gradient(to_right,transparent,white_15%,white_85%,transparent)]">
-              {/* Row 1: Marquee Left to Right (LTR) */}
-              <div className="relative flex overflow-hidden z-20 marquee-row pointer-events-auto">
-                <div className="flex w-max items-center animate-marquee-ltr py-2">
-                  {[...row1, ...row1].map((tool, idx) => (
+              {marqueeRows.map((row, rowIndex) => (
+                <Marquee
+                  key={rowIndex}
+                  pauseOnHover
+                  reverse={rowIndex === 0}
+                  repeat={4}
+                  className={cn(
+                    "relative z-20 py-2 [--gap:2.5rem]",
+                    rowIndex === 0 ? "[--duration:60s]" : "[--duration:45s]",
+                  )}
+                >
+                  {row.map((tool) => (
                     <div
-                      key={idx}
-                      className="flex flex-col items-center gap-3 group/item shrink-0 mr-10 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 duration-500 ease-in-out"
+                      key={tool.name}
+                      className="group/item flex w-16 shrink-0 flex-col items-center gap-3 grayscale opacity-60 duration-500 ease-in-out hover:grayscale-0 hover:opacity-100 md:w-20"
                     >
-                      <div className="relative w-8 h-8 md:w-12 md:h-12 transition-transform">
+                      <div className="relative h-8 w-8 md:h-12 md:w-12">
                         {renderToolIcon(tool)}
                       </div>
-                      <span className="text-xs text-white/80 font-medium group-hover/item:text-white transition-colors">
+                      <span className="max-w-full truncate text-xs font-medium text-white/80 transition-colors group-hover/item:text-white">
                         {tool.name}
                       </span>
                     </div>
                   ))}
-                </div>
-              </div>
-
-              {/* Row 2: Marquee Right to Left (RTL) */}
-              <div className="relative flex overflow-hidden z-20 marquee-row pointer-events-auto">
-                <div className="flex w-max items-center animate-marquee-rtl py-2">
-                  {[...row2, ...row2].map((tool, idx) => (
-                    <div
-                      key={idx}
-                      className="flex flex-col items-center gap-3 group/item shrink-0 mr-10 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 duration-500 ease-in-out"
-                    >
-                      <div className="relative w-8 h-8 md:w-12 md:h-12 transition-transform">
-                        {renderToolIcon(tool)}
-                      </div>
-                      <span className="text-xs text-white/80 font-medium group-hover/item:text-white transition-colors">
-                        {tool.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                </Marquee>
+              ))}
             </div>
           </BlurFade>
 

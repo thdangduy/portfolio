@@ -56,6 +56,10 @@ The `WaveformLine` component isn't just a static animation; it's a data-driven v
 | :--------------------------: | :-----------------------: |
 | ![Skills](./demo/skills.png) | ![Blog](./demo/blogs.png) |
 
+### Admin Panel
+
+![Admin](./demo/admin-panel.png)
+
 ### Contact
 
 ![Contact](./demo/contact.png)
@@ -149,8 +153,6 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 ### Admin Routes (Protected)
 
 - `/admin`: a mini CMS Admin panel. You can add, edit, and delete projects, settings : title, seo....
-
-![Portfolio Preview](./demo/admin-panel.png)
 
 ### API Endpoints
 

@@ -10,8 +10,13 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
   try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
     const { searchParams } = new URL(request.url);
-    const publishedOnly = searchParams.get("published") === "true";
+    const includeDrafts = Boolean(session?.user);
+    const publishedOnly =
+      searchParams.get("published") === "true" || !includeDrafts;
 
     const posts = await prisma.blogPost.findMany({
       where: publishedOnly ? { published: true } : undefined,

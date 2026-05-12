@@ -18,7 +18,7 @@ interface SiteSettingsFormProps {
   className?: string;
 }
 
-type EditableSettings = Omit<SiteSettings, "id">;
+type EditableSettings = Omit<SiteSettings, "id" | "tools">;
 
 const toLines = (value: string[]) => value.join("\n");
 
@@ -43,7 +43,6 @@ export default function SiteSettingsForm({
     aboutFootnote: initialSettings.aboutFootnote,
     skillsTitle: initialSettings.skillsTitle,
     competencies: initialSettings.competencies,
-    tools: initialSettings.tools,
     faviconUrl: initialSettings.faviconUrl,
     metaTitle: initialSettings.metaTitle,
     metaDescription: initialSettings.metaDescription,
@@ -95,8 +94,8 @@ export default function SiteSettingsForm({
       <div className="mb-10 flex flex-col gap-3">
         <h1 className="text-4xl font-bold text-blog-orange">Site Settings</h1>
         <p className="max-w-2xl text-sm text-blog-fg/70">
-          Update homepage copy, skills, favicon, metadata, and social SEO
-          without touching source code.
+          Update homepage copy, favicon, metadata, and social SEO without
+          touching source code.
         </p>
       </div>
 
@@ -135,7 +134,7 @@ export default function SiteSettingsForm({
           />
         </Section>
 
-        <Section title="Skills & Tools">
+        <Section title="Skills">
           <TextField
             label="Title"
             value={formData.skillsTitle}
@@ -145,11 +144,6 @@ export default function SiteSettingsForm({
             label="Competencies"
             value={formData.competencies}
             onChange={(value) => updateList("competencies", value)}
-          />
-          <ListField
-            label="Tools"
-            value={formData.tools}
-            onChange={(value) => updateList("tools", value)}
           />
         </Section>
 

@@ -10,9 +10,13 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    const includeDrafts = Boolean(session?.user);
 
-    const post = await prisma.blogPost.findUnique({
-      where: { slug },
+    const post = await prisma.blogPost.findFirst({
+      where: includeDrafts ? { slug } : { slug, published: true },
     });
 
     if (!post) {
