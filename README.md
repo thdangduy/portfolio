@@ -139,6 +139,42 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the site.
 
+## 🐳 Docker
+
+You can build and run the production app with Docker Compose.
+
+1. **Prepare environment variables:**
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Fill in the required values in `.env`. Docker Compose will load this file at runtime.
+
+2. **Build and start the container:**
+
+   ```bash
+   docker compose up -d --build
+   ```
+
+3. **Open the app:**
+
+   Visit [http://localhost:3000](http://localhost:3000).
+
+4. **View logs:**
+
+   ```bash
+   docker compose logs -f portfolio
+   ```
+
+5. **Stop the container:**
+
+   ```bash
+   docker compose down
+   ```
+
+The Compose service maps container port `3000` to host port `3000`. If that port is already in use, change the `ports` value in `docker-compose.yml`.
+
 ## 🛣️ Routes
 
 ### Pages
