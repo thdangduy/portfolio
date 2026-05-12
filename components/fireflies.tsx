@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
  * FIREFLY CONFIGURATION
  */
 const FIREFLY_CONFIG = {
-  TOTAL_FIREFLIES: 28,
+  TOTAL_FIREFLIES: 21,
   SPECIAL_FIREFLIES_START_INDEX: 20,
   BASE_SCALE_MIN: 0.5,
   BASE_SCALE_MAX: 1.2,

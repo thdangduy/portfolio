@@ -70,7 +70,14 @@ export const WaveformLine = () => {
   };
 
   const handleClick = () => {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    if (window.lenis) {
+      window.lenis.scrollTo(document.body.scrollHeight);
+    } else {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (

@@ -100,7 +100,11 @@ const Dock = () => {
   const handleClick = (id: string) => {
     if (id.charAt(0) === "/") {
       if (id === pathname) {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (window.lenis) {
+          window.lenis.scrollTo(0);
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
       }
       router.push(id);
       return;
@@ -111,7 +115,11 @@ const Dock = () => {
     }
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      if (window.lenis) {
+        window.lenis.scrollTo(element);
+      } else {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
