@@ -1,7 +1,6 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import ProjectForm from "@/components/project/form";
 import { auth } from "@/lib/auth";
 
 export default async function ProjectFormPage({
@@ -18,6 +17,5 @@ export default async function ProjectFormPage({
   }
 
   const { slug } = await searchParams;
-
-  return <ProjectForm projectSlug={slug} />;
+  redirect(`/admin?tab=projects${slug ? `&slug=${slug}` : "&mode=new"}`);
 }

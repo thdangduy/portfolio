@@ -1,9 +1,6 @@
-import { headers } from "next/headers";
 import Link from "next/link";
 
 import { Project } from "@/.generated/client";
-import { ProjectAdminControls } from "@/components/project/admin-controls";
-import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 import ProjectSmallCard from "./project-small-card";
@@ -11,13 +8,8 @@ import { BlurFade } from "./ui/blur-fade";
 
 const ProjectsIntro = async () => {
   let projects: Project[] = [];
-  let session = null;
 
   try {
-    const headersList = await headers();
-    session = await auth.api.getSession({
-      headers: headersList,
-    });
     projects = await prisma.project.findMany();
   } catch (error) {
     console.error("Failed to fetch projects:", error);
@@ -107,9 +99,6 @@ const ProjectsIntro = async () => {
 
                       <h3 className="text-2xl md:text-3xl font-bold text-white group-hover:text-primary transition-colors duration-300 flex justify-between items-start">
                         <span>{project.title}</span>
-                        {session && (
-                          <ProjectAdminControls slug={project.slug} />
-                        )}
                       </h3>
 
                       <p className="text-muted-foreground text-sm md:text-base leading-relaxed line-clamp-3">

@@ -19,7 +19,11 @@ const GlobalBackground = () => {
   const blurFilter = useTransform(blurValue, (v) => `blur(${v})`);
   const darkerOpacity = useTransform(darker, (v) => v);
 
-  if (path.startsWith("/project") || path.startsWith("/blog")) {
+  if (
+    path.startsWith("/project") ||
+    path.startsWith("/blog") ||
+    path.startsWith("/admin")
+  ) {
     return (
       <div className="fixed inset-0 z-[-1] w-full h-full bg-blog-bg overflow-hidden" />
     );

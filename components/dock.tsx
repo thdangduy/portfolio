@@ -135,6 +135,8 @@ const Dock = () => {
     }
   };
 
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <div className="">
       <div className="fixed bottom-4 z-50 left-1/2 transform -translate-x-1/2 flex items-center bg-[#1a1a1a]/80 backdrop-blur-md rounded-full px-2 py-2 border border-white/10 shadow-lg">

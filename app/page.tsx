@@ -8,10 +8,12 @@ import Intro from "@/components/intro";
 import ProjectsIntro from "@/components/projects-intro";
 import Skills from "@/components/skills";
 import { getProjects } from "@/lib/actions/projects";
+import { getSiteSettings } from "@/lib/site-settings";
 
 export const revalidate = 600;
 
 export default async function Home() {
+  const settings = await getSiteSettings();
   await getProjects();
   let wakatimeData = { languages: [] };
   try {
@@ -31,9 +33,9 @@ export default async function Home() {
     <>
       <div className="container mx-auto px-6 pb-28 lg:px-20">
         <Intro />
-        <About />
+        <About settings={settings} />
         <ProjectsIntro />
-        <Skills languages={wakatimeData.languages} />
+        <Skills languages={wakatimeData.languages} settings={settings} />
         <BlogPreview />
         <ContactSection />
       </div>

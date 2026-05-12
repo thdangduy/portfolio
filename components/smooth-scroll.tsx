@@ -1,6 +1,7 @@
 "use client";
 
 import Lenis from "lenis";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 interface SmoothScrollProps {
@@ -16,7 +17,14 @@ declare global {
 const easing = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t));
 
 const SmoothScroll = ({ children }: SmoothScrollProps) => {
+  const pathname = usePathname();
+
   useEffect(() => {
+    if (pathname.startsWith("/admin")) {
+      delete window.lenis;
+      return;
+    }
+
     const lenis = new Lenis({
       duration: 1.2,
       easing,
@@ -61,7 +69,7 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
       }
       lenis.destroy();
     };
-  }, []);
+  }, [pathname]);
 
   return <>{children}</>;
 };

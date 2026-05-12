@@ -148,8 +148,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ### Admin Routes (Protected)
 
-- `/blog/editor`: Create/Edit Blog Posts (Admin can edit or remove posts)
-- `/projects/form`: Create/Edit Projects (Admin can edit or remove projects)
+- `/admin`: a mini CMS Admin panel. You can edit blog posts, projects, and portfolio settings.
 
 ### API Endpoints
 

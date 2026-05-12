@@ -39,6 +39,33 @@ model Project {
   updated_at   DateTime @db.Date
 }
 
+model SiteSettings {
+  id                 String   @id @map("_id")
+  aboutTitle         String
+  aboutParagraphs    String[]
+  aboutQuote         String
+  aboutPrinciples    String
+  aboutSubquote      String
+  aboutFootnote      String
+  skillsTitle        String
+  competencies       String[]
+  tools              String[]
+  faviconUrl         String
+  metaTitle          String
+  metaDescription    String
+  metaKeywords       String[]
+  authorName         String
+  siteUrl            String
+  ogTitle            String
+  ogDescription      String
+  ogImage            String
+  twitterTitle       String
+  twitterDescription String
+  updatedAt          DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
 model User {
   id            String    @id @map("_id")
   name          String

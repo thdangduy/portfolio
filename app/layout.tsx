@@ -12,10 +12,8 @@ import SmoothScroll from "@/components/smooth-scroll";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { Toaster } from "@/components/ui/sonner";
 import { GoogleSans } from "@/fonts";
+import { getSiteSettings, resolvePublicUrl } from "@/lib/site-settings";
 import { cn } from "@/lib/utils";
-
-const heroImgUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/hero.png`;
-const faviconUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/favicon.png`;
 
 export const viewport = {
   width: "device-width",
@@ -23,56 +21,44 @@ export const viewport = {
   maximumScale: 1,
 };
 
-export const metadata: Metadata = {
-  title: "Thái Duy | Self-taught SysAdmin & Infrastructure lover",
-  icons: {
-    icon: faviconUrl,
-  },
-  description:
-    "Thái Duy is a SysAdmin and Automation expert from Vietnam, specializing in self-hosted infrastructure, Docker, n8n workflows, and logistics operations optimization.",
-  keywords: [
-    "thaiduy",
-    "Thái Duy",
-    "portfolio",
-    "portfolio.thaiduy.digital",
-    "SysAdmin Vietnam",
-    "Infrastructure Engineer",
-    "Automation Expert",
-    "n8n workflows",
-    "Self-hosted Specialist",
-    "Docker & Proxmox",
-    "Logistics Optimization",
-    "Networking & VPN",
-    "Ubuntu Server",
-    "Oracle Cloud ARM",
-    "Portfolio",
-  ],
-  authors: [{ name: "Thái Duy", url: "https://portfolio.thaiduy.digital" }],
-  openGraph: {
-    title: "Thái Duy | Self-taught SysAdmin & Infrastructure lover",
-    description:
-      "Explore the portfolio of Thái Duy, focusing on system administration, infrastructure, and business automation. Expert in n8n, Docker, and Logistics-driven tech solutions.",
-    url: "https://portfolio.thaiduy.digital",
-    siteName: "Thái Duy Portfolio",
-    locale: "vi_VN",
-    type: "website",
-    images: [
-      {
-        url: heroImgUrl,
-        width: 800,
-        height: 600,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Thái Duy | SysAdmin & Automation Expert",
-    description:
-      "Specializing in infrastructure, self-hosted services, and logistics optimization through automation.",
-    creator: "@thaiduy",
-    images: [heroImgUrl],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || settings.siteUrl;
+  const faviconUrl = resolvePublicUrl(settings.faviconUrl, baseUrl);
+  const ogImageUrl = resolvePublicUrl(settings.ogImage, baseUrl);
+
+  return {
+    title: settings.metaTitle,
+    icons: {
+      icon: faviconUrl,
+    },
+    description: settings.metaDescription,
+    keywords: settings.metaKeywords,
+    authors: [{ name: settings.authorName, url: settings.siteUrl }],
+    openGraph: {
+      title: settings.ogTitle,
+      description: settings.ogDescription,
+      url: settings.siteUrl,
+      siteName: `${settings.authorName} Portfolio`,
+      locale: "vi_VN",
+      type: "website",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 800,
+          height: 600,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: settings.twitterTitle,
+      description: settings.twitterDescription,
+      creator: "@thaiduy",
+      images: [ogImageUrl],
+    },
+  };
+}
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>

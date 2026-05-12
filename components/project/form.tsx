@@ -10,14 +10,24 @@ import { toast } from "sonner";
 import { ZodIssue } from "zod";
 
 import api from "@/api";
+import { Button } from "@/components/ui/button";
 import { getProjectBySlug } from "@/lib/actions/projects";
 import { ProjectFormSchema } from "@/lib/schema/project.types";
+import { cn } from "@/lib/utils";
 
 interface ProjectFormProps {
   projectSlug?: string;
+  embedded?: boolean;
+  redirectPath?: string;
+  title?: string;
 }
 
-const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
+const ProjectForm = ({
+  projectSlug,
+  embedded = false,
+  redirectPath = "/projects",
+  title,
+}: ProjectFormProps) => {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -37,6 +47,10 @@ const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
   const [previewHTML, setPreviewHTML] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const inputClass =
+    "w-full rounded-md border border-blog-cyan/40 bg-blog-black px-3 py-2 text-blog-white placeholder:text-blog-fg/40 focus:outline-none focus:ring-1 focus:ring-blog-orange";
+  const labelClass = "block text-sm font-medium mb-1 text-blog-fg";
+  const errorClass = "text-blog-red text-sm mt-1";
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -158,9 +172,12 @@ const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
 
       if (res.status === 201 || res.status === 200) {
         toast.success(
-          isEditing ? "Project updated successfully!" : "Project created successfully!",
+          isEditing
+            ? "Project updated successfully!"
+            : "Project created successfully!",
         );
-        router.push("/projects");
+        router.push(redirectPath);
+        router.refresh();
       } else {
         toast.error("Failed to save project");
       }
@@ -173,11 +190,11 @@ const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-4">
+    <div className={cn("mx-auto max-w-7xl", embedded ? "p-0" : "p-4")}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <h2 className="text-lg font-semibold mb-3">
-            {isEditing ? "Edit Project" : "Create New Project"}
+          <h2 className="text-lg font-semibold mb-3 text-blog-cyan">
+            {title ?? (isEditing ? "Edit Project" : "Create New Project")}
           </h2>
 
           <ImageUpload
@@ -187,66 +204,58 @@ const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
 
           <div className="space-y-4 mt-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Title</label>
+              <label className={labelClass}>Title</label>
               <input
                 type="text"
                 name="title"
                 placeholder="Project title"
                 value={formData.title}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClass}
               />
-              {errors.title && (
-                <p className="text-red-500 text-sm mt-1">{errors.title}</p>
-              )}
+              {errors.title && <p className={errorClass}>{errors.title}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Excerpt</label>
+              <label className={labelClass}>Excerpt</label>
               <textarea
                 name="excerpt"
                 placeholder="Brief description"
                 value={formData.excerpt}
                 onChange={handleChange}
                 rows={2}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClass}
               />
-              {errors.excerpt && (
-                <p className="text-red-500 text-sm mt-1">{errors.excerpt}</p>
-              )}
+              {errors.excerpt && <p className={errorClass}>{errors.excerpt}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Slug</label>
+              <label className={labelClass}>Slug</label>
               <input
                 type="text"
                 name="slug"
                 placeholder="project-slug"
                 value={formData.slug}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClass}
               />
-              {errors.slug && (
-                <p className="text-red-500 text-sm mt-1">{errors.slug}</p>
-              )}
+              {errors.slug && <p className={errorClass}>{errors.slug}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Project Link (Optional)
-              </label>
+              <label className={labelClass}>Project Link (Optional)</label>
               <input
                 type="text"
                 name="link"
                 placeholder="https://example.com"
                 value={formData.link || ""}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClass}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Tags</label>
+              <label className={labelClass}>Tags</label>
               <input
                 type="text"
                 placeholder="web, frontend, react (comma separated)"
@@ -260,17 +269,13 @@ const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
                       .filter(Boolean),
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClass}
               />
-              {errors.tags && (
-                <p className="text-red-500 text-sm mt-1">{errors.tags}</p>
-              )}
+              {errors.tags && <p className={errorClass}>{errors.tags}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Technologies
-              </label>
+              <label className={labelClass}>Technologies</label>
               <input
                 type="text"
                 placeholder="React, TypeScript, Node.js (comma separated)"
@@ -284,37 +289,28 @@ const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
                       .filter(Boolean),
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClass}
               />
               {errors.technologies && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.technologies}
-                </p>
+                <p className={errorClass}>{errors.technologies}</p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Description
-              </label>
+              <label className={labelClass}>Description</label>
               {editor && (
                 <EditorContent
                   editor={editor}
-                  className="min-h-37.5 border border-gray-300 rounded-md px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500"
+                  className="min-h-37.5 rounded-md border border-blog-cyan/40 bg-blog-black px-3 py-2 text-blog-white focus-within:ring-1 focus-within:ring-blog-orange"
                 />
               )}
               {errors.description && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.description}
-                </p>
+                <p className={errorClass}>{errors.description}</p>
               )}
             </div>
 
             <div>
-              <label
-                htmlFor="image-upload"
-                className="block text-sm font-medium mb-1"
-              >
+              <label htmlFor="image-upload" className={labelClass}>
                 Insert Image into Description
               </label>
               <input
@@ -325,28 +321,30 @@ const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
                   const file = e.target.files?.[0];
                   if (file) insertImage(file);
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={inputClass}
               />
             </div>
 
-            <button
+            <Button
               type="submit"
               onClick={handleSubmit}
               disabled={isLoading}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:opacity-50"
+              className="w-full bg-blog-orange text-blog-bg hover:bg-blog-orange/90"
             >
               {isLoading
                 ? "Saving..."
                 : isEditing
                   ? "Update Project"
                   : "Create Project"}
-            </button>
+            </Button>
           </div>
         </div>
         <div className="order-2 md:order-1">
           <div className="sticky top-4">
-            <h2 className="text-lg font-semibold mb-3">Live Preview</h2>
-            <div className="border rounded-lg p-4  min-h-100">
+            <h2 className="text-lg font-semibold mb-3 text-blog-cyan">
+              Live Preview
+            </h2>
+            <div className="min-h-100 rounded-md border border-blog-black bg-blog-black/60 p-4">
               {selectedImage && (
                 <NextImage
                   src={selectedImage}
@@ -358,17 +356,21 @@ const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
                 />
               )}
               {formData.title && (
-                <h3 className="text-xl font-bold mb-2">{formData.title}</h3>
+                <h3 className="text-xl font-bold mb-2 text-blog-white">
+                  {formData.title}
+                </h3>
               )}
               {formData.excerpt && (
-                <p className="text-gray-600 mb-3 italic">{formData.excerpt}</p>
+                <p className="mb-3 text-blog-fg/70 italic">
+                  {formData.excerpt}
+                </p>
               )}
               {formData.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1 mb-3">
                   {formData.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded"
+                      className="rounded bg-blog-selection-bg px-2 py-1 text-xs text-blog-cyan"
                     >
                       {tag}
                     </span>
@@ -380,7 +382,7 @@ const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
                   {formData.technologies.map((tech, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded"
+                      className="rounded bg-blog-selection-bg px-2 py-1 text-xs text-blog-green"
                     >
                       {tech}
                     </span>
@@ -388,16 +390,16 @@ const ProjectForm = ({ projectSlug }: ProjectFormProps) => {
                 </div>
               )}
               <div
-                className="prose max-w-none prose-invert prose-sm"
+                className="prose prose-invert prose-sm max-w-none text-blog-fg"
                 dangerouslySetInnerHTML={{ __html: previewHTML }}
               />
               {formData.link && (
-                <div className="mt-4 pt-3 border-t">
+                <div className="mt-4 border-t border-blog-black pt-3">
                   <a
                     href={formData.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline"
+                    className="text-blog-cyan hover:underline"
                   >
                     View Project →
                   </a>
@@ -433,11 +435,11 @@ const ImageUpload = ({
 
   return (
     <div className="mb-4">
-      <label className="block text-sm font-medium mb-2">
+      <label className="mb-2 block text-sm font-medium text-blog-fg">
         Project Thumbnail
       </label>
       <div
-        className="h-32 w-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition-colors flex items-center justify-center"
+        className="flex h-32 w-32 cursor-pointer items-center justify-center rounded-md border-2 border-dashed border-blog-cyan/40 bg-blog-black transition-colors hover:border-blog-orange"
         onClick={() => inputRef.current?.click()}
       >
         <input
@@ -457,7 +459,7 @@ const ImageUpload = ({
             className="h-full w-full object-cover rounded-lg"
           />
         ) : (
-          <div className="text-center text-gray-500">
+          <div className="text-center text-blog-fg/60">
             <div className="text-2xl mb-1">+</div>
             <div className="text-xs">Add Image</div>
           </div>

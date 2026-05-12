@@ -17,7 +17,7 @@ export function ProjectAdminControls({ slug }: ProjectAdminControlsProps) {
   const handleEdit = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    router.push(`/projects/form?slug=${slug}`);
+    router.push(`/admin?tab=projects&slug=${slug}`);
   };
 
   const handleDelete = async (e: React.MouseEvent) => {

@@ -44,7 +44,7 @@ export function AdminControls({ slug }: AdminControlsProps) {
         asChild
         className="h-8 w-8 text-blog-cyan hover:text-blog-cyan hover:bg-blog-cyan/10"
       >
-        <Link href={`/blog/editor?slug=${slug}`}>
+        <Link href={`/admin?tab=blog&slug=${slug}`}>
           <Edit className="h-4 w-4" />
         </Link>
       </Button>

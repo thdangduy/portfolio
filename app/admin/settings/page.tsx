@@ -3,11 +3,7 @@ import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
 
-export default async function BlogEditorPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ slug?: string }>;
-}) {
+export default async function AdminSettingsPage() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -16,6 +12,5 @@ export default async function BlogEditorPage({
     redirect("/login");
   }
 
-  const { slug } = await searchParams;
-  redirect(`/admin?tab=blog${slug ? `&slug=${slug}` : "&mode=new"}`);
+  redirect("/admin?tab=settings");
 }

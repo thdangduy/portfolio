@@ -1,13 +1,10 @@
 import { Metadata } from "next";
-import { headers } from "next/headers";
 import Link from "next/link";
 
 import { BlogPost } from "@/.generated/client";
-import { AdminControls } from "@/components/blog/admin-controls";
 import { ViewCounter } from "@/components/blog/view-counter";
 import { JetBrainsMono } from "@/fonts";
 import { getblogPost } from "@/lib/actions/blogs";
-import { auth, Session } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -30,9 +27,6 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogIndex() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
   const allPosts = await getblogPost();
 
   return (
@@ -54,7 +48,7 @@ export default async function BlogIndex() {
           <p className="text-lg text-blog-fg opacity-80">No posts found.</p>
         ) : (
           <div className="grid gap-8">
-            <BlogCards posts={allPosts} session={session} />
+            <BlogCards posts={allPosts} />
           </div>
         )}
       </div>
@@ -62,13 +56,7 @@ export default async function BlogIndex() {
   );
 }
 
-function BlogCards({
-  posts,
-  session,
-}: {
-  posts: BlogPost[];
-  session: Session | null;
-}) {
+function BlogCards({ posts }: { posts: BlogPost[] }) {
   return (
     <>
       {posts.map((post) => (
@@ -86,7 +74,6 @@ function BlogCards({
                 </span>
               )}
             </span>
-            {session && <AdminControls slug={post.slug} />}
           </h2>
           <div className="text-sm mb-4 text-blog-black font-mono flex items-center gap-4">
             {new Date(post.created_at).toLocaleDateString()}

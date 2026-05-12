@@ -1,10 +1,15 @@
 "use client";
 import { Download } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { WaveformLine } from "./waveform";
 
 const Navbar = () => {
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <div className="fixed top-6 right-6 z-50 md:top-10 md:right-20">
       <div className="flex flex-col items-end gap-2">

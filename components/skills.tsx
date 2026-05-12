@@ -13,10 +13,10 @@ import {
 } from "@icons-pack/react-simple-icons";
 import { IconType } from "@icons-pack/react-simple-icons";
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 import { BlurFade } from "@/components/ui/blur-fade";
 import { GoogleSans } from "@/fonts";
+import type { SiteSettings } from "@/lib/site-settings";
 import { cn } from "@/lib/utils";
 
 interface Tool {
@@ -32,45 +32,44 @@ interface Language {
 
 interface SkillsProps {
   languages: Language[];
+  settings: SiteSettings;
 }
 
-const Skills = ({ languages }: SkillsProps) => {
-  const competencies = [
-    "Automation & Workflows",
-    "Infrastructure & Virtualization",
-    "Networking",
-    "System Optimization",
-    "Database Management",
-    "Logistics Operations & Optimization",
-  ];
+const toolIcons: Record<string, Tool> = {
+  docker: { name: "Docker", icon: SiDocker, color: "#2496ED" },
+  erpnext: { name: "ERPNext", icon: SiErpnext, color: "#0089FF" },
+  frappe: { name: "Frappe", icon: SiFrappe, color: "#0089FF" },
+  git: { name: "Git", icon: SiGit, color: "#F05032" },
+  mongodb: { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+  n8n: { name: "n8n", icon: SiN8n, color: "#EA4B71" },
+  proxmox: { name: "Proxmox", icon: SiProxmox, color: "#E57000" },
+  python: { name: "Python", icon: SiPython, color: "#3776AB" },
+  ubuntu: { name: "Ubuntu", icon: SiUbuntu, color: "#E95420" },
+  wireguard: { name: "Wireguard", icon: SiWireguard, color: "#88171A" },
+};
 
-  const toolsGrid: Tool[] = [
-    { name: "Python", icon: SiPython, color: "#3776AB" },
-    { name: "Proxmox", icon: SiProxmox, color: "#E57000" },
-    { name: "ERPNext", icon: SiErpnext, color: "#0089FF" },
-    { name: "Ubuntu", icon: SiUbuntu, color: "#E95420" },
-    { name: "Git", icon: SiGit, color: "#F05032" },
-    { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
-    { name: "Frappe", icon: SiFrappe, color: "#0089FF" },
-    { name: "Docker", icon: SiDocker, color: "#2496ED" },
-    { name: "n8n", icon: SiN8n, color: "#EA4B71" },
-    { name: "Wireguard", icon: SiWireguard, color: "#88171A" },
+const getTool = (name: string): Tool => {
+  const key = name.toLowerCase().replace(/\s+/g, "");
+  return toolIcons[key] ?? { name, icon: name.slice(0, 2).toUpperCase() };
+};
 
-    { name: "Python", icon: SiPython, color: "#3776AB" },
-    { name: "Proxmox", icon: SiProxmox, color: "#E57000" },
-    { name: "ERPNext", icon: SiErpnext, color: "#0089FF" },
-    { name: "Ubuntu", icon: SiUbuntu, color: "#E95420" },
-    { name: "Git", icon: SiGit, color: "#F05032" },
-    { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
-    { name: "Frappe", icon: SiFrappe, color: "#0089FF" },
-    { name: "Docker", icon: SiDocker, color: "#2496ED" },
-    { name: "n8n", icon: SiN8n, color: "#EA4B71" },
-    { name: "Wireguard", icon: SiWireguard, color: "#88171A" },
+const renderToolIcon = (tool: Tool) => {
+  if (typeof tool.icon === "string") {
+    return (
+      <div className="flex h-full w-full items-center justify-center rounded-full border border-white/15 bg-white/5 text-xs font-bold text-primary">
+        {tool.icon}
+      </div>
+    );
+  }
 
-  ];
+  return <tool.icon className="w-full h-full" color={tool.color} />;
+};
 
-  const row1 = toolsGrid.slice(0, 10);
-  const row2 = toolsGrid.slice(10, 20);
+const Skills = ({ languages, settings }: SkillsProps) => {
+  const toolsGrid = settings.tools.map(getTool);
+  const midpoint = Math.ceil(toolsGrid.length / 2);
+  const row1 = toolsGrid.slice(0, midpoint);
+  const row2 = toolsGrid.slice(midpoint);
 
   const displayLanguages = languages ? languages.slice(0, 5) : [];
 
@@ -109,11 +108,11 @@ const Skills = ({ languages }: SkillsProps) => {
           <BlurFade delay={0.25} inView>
             <div>
               <h2 className="text-4xl md:text-6xl font-bold  mb-6">
-                Skills & Tools
+                {settings.skillsTitle}
               </h2>
 
               <ul className="grid grid-cols-1 w-fit  sm:grid-cols-2 gap-x-24 gap-y-3 text-sm md:text-base text-gray-300">
-                {competencies.map((item, idx) => (
+                {settings.competencies.map((item, idx) => (
                   <li
                     key={idx}
                     className="flex text-sm font-bold items-center gap-2"
@@ -137,16 +136,7 @@ const Skills = ({ languages }: SkillsProps) => {
                       className="flex flex-col items-center gap-3 group/item shrink-0 mr-10 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 duration-500 ease-in-out"
                     >
                       <div className="relative w-8 h-8 md:w-12 md:h-12 transition-transform">
-                        {typeof tool.icon === 'string' ? (
-                          <Image
-                            src={tool.icon}
-                            alt={tool.name}
-                            fill
-                            className="object-contain"
-                          />
-                        ) : (
-                          <tool.icon className="w-full h-full" color={tool.color} />
-                        )}
+                        {renderToolIcon(tool)}
                       </div>
                       <span className="text-xs text-white/80 font-medium group-hover/item:text-white transition-colors">
                         {tool.name}
@@ -165,16 +155,7 @@ const Skills = ({ languages }: SkillsProps) => {
                       className="flex flex-col items-center gap-3 group/item shrink-0 mr-10 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 duration-500 ease-in-out"
                     >
                       <div className="relative w-8 h-8 md:w-12 md:h-12 transition-transform">
-                        {typeof tool.icon === 'string' ? (
-                          <Image
-                            src={tool.icon}
-                            alt={tool.name}
-                            fill
-                            className="object-contain"
-                          />
-                        ) : (
-                          <tool.icon className="w-full h-full" color={tool.color} />
-                        )}
+                        {renderToolIcon(tool)}
                       </div>
                       <span className="text-xs text-white/80 font-medium group-hover/item:text-white transition-colors">
                         {tool.name}

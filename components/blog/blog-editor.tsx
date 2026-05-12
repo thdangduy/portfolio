@@ -20,9 +20,17 @@ import { cn, slugify } from "@/lib/utils";
 
 interface BlogEditorProps {
   initialPost?: BlogPost | null;
+  embedded?: boolean;
+  redirectPath?: string;
+  title?: string;
 }
 
-export default function BlogEditor({ initialPost }: BlogEditorProps) {
+export default function BlogEditor({
+  initialPost,
+  embedded = false,
+  redirectPath = "/blog",
+  title: heading = "Blog Editor",
+}: BlogEditorProps) {
   const router = useRouter();
   const draftStorageKey = `blog-editor-draft:${initialPost?.slug ?? "new"}`;
   const [title, setTitle] = useState(initialPost?.title || "");
@@ -75,7 +83,8 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
       toast.success(publish ? "Blog post published!" : "Draft saved!");
       localStorage.removeItem(draftStorageKey);
 
-      router.push("/blog");
+      router.push(redirectPath);
+      router.refresh();
     } catch (error) {
       console.error("Error saving blog post:", error);
       toast.error(
@@ -232,12 +241,15 @@ export default function BlogEditor({ initialPost }: BlogEditorProps) {
 
   return (
     <div
-      className={cn("min-h-screen p-8 text-blog-fg", JetBrainsMono.className)}
+      className={cn(
+        embedded ? "text-blog-fg" : "min-h-screen p-8 text-blog-fg",
+        JetBrainsMono.className,
+      )}
     >
-      <div className="max-w-450 mx-auto">
+      <div className={cn("mx-auto", embedded ? "max-w-none" : "max-w-450")}>
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-blog-orange mb-2">
-            Blog Editor
+            {heading}
           </h1>
           <p className="text-blog-fg opacity-80">
             Write your blog post with live preview
