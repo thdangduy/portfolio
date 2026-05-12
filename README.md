@@ -148,7 +148,9 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ### Admin Routes (Protected)
 
-- `/admin`: a mini CMS Admin panel. You can edit blog posts, projects, and portfolio settings.
+- `/admin`: a mini CMS Admin panel. You can add, edit, and delete projects, settings : title, seo....
+
+![Portfolio Preview](./demo/admin-panel.png)
 
 ### API Endpoints
 
