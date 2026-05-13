@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { normalizeSiteSettings, SITE_SETTINGS_ID } from "@/lib/site-settings";
 
 const stringFields = [
+  "downloadCvUrl",
   "aboutTitle",
   "aboutQuote",
   "aboutPrinciples",
@@ -65,6 +66,7 @@ export async function PUT(request: Request) {
     create: normalized,
     update: {
       aboutTitle: normalized.aboutTitle,
+      downloadCvUrl: normalized.downloadCvUrl,
       aboutParagraphs: normalized.aboutParagraphs,
       aboutQuote: normalized.aboutQuote,
       aboutPrinciples: normalized.aboutPrinciples,

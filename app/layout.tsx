@@ -61,14 +61,20 @@ export async function generateMetadata(): Promise<Metadata> {
     },
   };
 }
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const settings = await getSiteSettings();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("text-white cursor-none", GoogleSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="dark">
           <NowPlayingProvider>
             <GlobalBackground />
-            <Navbar />
+            <Navbar downloadCvUrl={settings.downloadCvUrl} />
             <Dock />
             <SmoothScroll>{children}</SmoothScroll>
             <Toaster />

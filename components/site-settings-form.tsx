@@ -35,6 +35,7 @@ export default function SiteSettingsForm({
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [formData, setFormData] = useState<EditableSettings>({
+    downloadCvUrl: initialSettings.downloadCvUrl,
     aboutTitle: initialSettings.aboutTitle,
     aboutParagraphs: initialSettings.aboutParagraphs,
     aboutQuote: initialSettings.aboutQuote,
@@ -101,6 +102,11 @@ export default function SiteSettingsForm({
 
       <div className="grid gap-10">
         <Section title="About">
+          <TextField
+            label="Download CV URL"
+            value={formData.downloadCvUrl}
+            onChange={(value) => updateField("downloadCvUrl", value)}
+          />
           <TextField
             label="Title"
             value={formData.aboutTitle}

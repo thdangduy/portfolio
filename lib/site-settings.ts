@@ -4,6 +4,7 @@ export const SITE_SETTINGS_ID = "site";
 
 export type SiteSettings = {
   id: string;
+  downloadCvUrl: string;
   aboutTitle: string;
   aboutParagraphs: string[];
   aboutQuote: string;
@@ -28,6 +29,8 @@ export type SiteSettings = {
 
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   id: SITE_SETTINGS_ID,
+  downloadCvUrl:
+    "https://drive.google.com/file/d/1wcR-9LoLmYQQ3lh-m35V7NxV1AdURNda/view?usp=drive_link",
   aboutTitle: "Me",
   aboutParagraphs: [
     "I'm Duy from Vietnam. I'm a Self-taught SysAdmin with a deep passion for cloud infrastructure and operational efficiency.",
@@ -93,6 +96,10 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
     "Specializing in infrastructure, self-hosted services, and logistics optimization through automation.",
 };
 
+type SiteSettingsInput = Partial<Omit<SiteSettings, "downloadCvUrl">> & {
+  downloadCvUrl?: string | null;
+};
+
 const asStringArray = (value: unknown, fallback: string[]) => {
   if (!Array.isArray(value)) return fallback;
 
@@ -104,11 +111,13 @@ const asStringArray = (value: unknown, fallback: string[]) => {
 };
 
 export const normalizeSiteSettings = (
-  value: Partial<SiteSettings> | null | undefined,
+  value: SiteSettingsInput | null | undefined,
 ): SiteSettings => ({
   ...DEFAULT_SITE_SETTINGS,
   ...value,
   id: SITE_SETTINGS_ID,
+  downloadCvUrl:
+    value?.downloadCvUrl?.trim() || DEFAULT_SITE_SETTINGS.downloadCvUrl,
   aboutParagraphs: asStringArray(
     value?.aboutParagraphs,
     DEFAULT_SITE_SETTINGS.aboutParagraphs,

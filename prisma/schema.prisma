@@ -41,6 +41,7 @@ model Project {
 
 model SiteSettings {
   id                 String   @id @map("_id")
+  downloadCvUrl      String?
   aboutTitle         String
   aboutParagraphs    String[]
   aboutQuote         String

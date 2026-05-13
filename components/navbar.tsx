@@ -5,7 +5,11 @@ import { usePathname } from "next/navigation";
 
 import { WaveformLine } from "./waveform";
 
-const Navbar = () => {
+type NavbarProps = {
+  downloadCvUrl: string;
+};
+
+const Navbar = ({ downloadCvUrl }: NavbarProps) => {
   const pathname = usePathname();
 
   if (pathname.startsWith("/admin")) return null;
@@ -31,7 +35,7 @@ const Navbar = () => {
           </Link>
           <Link
             target="_blank"
-            href="https://drive.google.com/file/d/1wcR-9LoLmYQQ3lh-m35V7NxV1AdURNda/view?usp=drive_link"
+            href={downloadCvUrl}
             className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-white/20 hover:scale-105 backdrop-blur-md border border-white/5"
           >
             <span>Download CV</span>
