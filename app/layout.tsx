@@ -56,25 +56,19 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: settings.twitterTitle,
       description: settings.twitterDescription,
-      creator: "@thaiduy",
+      creator: "@thaiduy27",
       images: [ogImageUrl],
     },
   };
 }
-export default async function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  const settings = await getSiteSettings();
-
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("text-white cursor-none", GoogleSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="dark">
           <NowPlayingProvider>
             <GlobalBackground />
-            <Navbar downloadCvUrl={settings.downloadCvUrl} />
+            <Navbar />
             <Dock />
             <SmoothScroll>{children}</SmoothScroll>
             <Toaster />
